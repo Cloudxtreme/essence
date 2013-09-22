@@ -13,7 +13,7 @@ class Essence.Timelet extends Essence.Controller
   # named regions for view management.
   #
   class @Layout extends Backbone.Marionette.Layout
-    template: 'timelet/layout'
+    template: 'modules/timelet/templates/layout'
 
     regions:
       header:        'header'

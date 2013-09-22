@@ -1,7 +1,7 @@
 # Timelet dashboard area.
 #
 class Essence.Views.TimeletDashboard extends Backbone.Marionette.Layout
-  template: 'timelet/timelet_dashboard'
+  template: 'modules/timelet/templates/timelet_dashboard'
 
   regions:
     preview:   'article.preview'
@@ -9,7 +9,8 @@ class Essence.Views.TimeletDashboard extends Backbone.Marionette.Layout
 
   initialize: ->
     @timelet = new Essence.Models.Timelet
+    @timelets = new Backbone.Collection
 
   onRender: ->
     @preview.show new Essence.Views.Clock(model: @timelet, parent: @)
-    #@inventory.show new Essence.Views.Timelets(collection: @timelet, parent: @)
+    @inventory.show new Essence.Views.Timelets(collection: @timelets, parent: @)

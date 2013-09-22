@@ -1,5 +1,5 @@
 # A single timelet view.
 #
 class Essence.Views.Timelet extends Backbone.Marionette.ItemView
-  template: 'timelet/timelet'
+  template: 'modules/timelet/templates/timelet'
   tagName: 'li'

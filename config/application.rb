@@ -20,9 +20,10 @@ module Timelets
     # config.i18n.load_path += Dir[Rails.root.join('my', 'locales', '*.{rb,yml}').to_s]
     # config.i18n.default_locale = :de
 
-    if defined? ::HamlCoffeeAssets
-      config.hamlcoffee.context = 'Essence.application.globalTemplateContext'
-      config.hamlcoffee.name_filter = lambda { |n| n.gsub(/(app\/|modules\/|templates\/)/, '') }
-    end
+    # FIXME haml_coffee_assets don't fully work on Rails 4
+    #if defined? ::HamlCoffeeAssets
+    #  config.hamlcoffee.context = 'Essence.application.globalTemplateContext'
+    #  config.hamlcoffee.name_filter = lambda { |n| n.gsub(/(app\/|modules\/|templates\/)/, '') }
+    #end
   end
 end
