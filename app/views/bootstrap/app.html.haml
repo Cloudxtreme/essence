@@ -1,0 +1,27 @@
+!!! 5
+%html{ lang: I18n.locale }
+  %head
+    %title Timelets
+    %meta{ charset: 'utf-8' }
+    %meta{ name: 'viewport', content: 'width=device-width, initial-scale=1' }
+
+    = csrf_meta_tags
+
+    %link{ rel: 'shortcut icon', href: '/favicon.ico' }
+    %link{ rel: 'icon', type: 'image/x-icon', href: '/favicon.ico' }
+
+    = stylesheet_link_tag 'application'
+
+    %body
+      #container
+
+    = javascript_include_tag 'application'
+
+    :javascript
+      $(function() {
+        window.Essence.application = new Essence.Application();
+
+        //Essence.collections.notifications(#{ bootstrap_notifications });
+
+        Essence.application.start(#{ bootstrap_authentication_token }, #{ bootstrap_tracking_headers });
+      });
