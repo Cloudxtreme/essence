@@ -8,7 +8,7 @@ class Essence.Views.TimeletDashboard extends Backbone.Marionette.Layout
     inventory: 'article.inventory'
 
   initialize: ->
-    @timelet = new Essence.Models.Timelet
+    @timelet = new Essence.Models.Timelet duration: 50
     @timelets = new Backbone.Collection
 
   onRender: ->

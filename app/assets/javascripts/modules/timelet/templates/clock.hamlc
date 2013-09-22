@@ -1,1 +1,14 @@
-%section.clock a clock
+%section.hidden.countdown
+  %span.timer= @timer
+  %span seconds to go
+
+%section.clock
+  %h2 Your Clock
+  %label
+    %input.duration{ type: 'number', min: 1, value: @duration }
+    seconds
+  %button.start Run
+
+%section.controls
+  %input.name{ type: 'text' }
+  %button.save Save
