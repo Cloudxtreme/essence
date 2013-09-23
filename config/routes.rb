@@ -1,4 +1,4 @@
-Timelets::Application.routes.draw do
+Essence::Application.routes.draw do
 
   #if %w(development test).include? Rails.env
   #  require 'jasminerice'

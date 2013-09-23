@@ -3,4 +3,4 @@
 
 require File.expand_path('../config/application', __FILE__)
 
-Timelets::Application.load_tasks
+Essence::Application.load_tasks

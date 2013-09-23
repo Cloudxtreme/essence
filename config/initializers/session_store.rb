@@ -1,3 +1,3 @@
 # Be sure to restart your server when you modify this file.
 
-Timelets::Application.config.session_store :cookie_store, key: '_timelets_session'
+Essence::Application.config.session_store :cookie_store, key: '_essence_session'
