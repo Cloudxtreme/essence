@@ -202,7 +202,7 @@ class Essence.Application extends Essence.Controller
       @loginUserDeferred = new $.Deferred()
 
       if @token
-        new Recomy.Models.User().fetch({
+        new Essence.Models.User().fetch({
           notify: false
           url: '/api/user/authentication'
           error: =>
@@ -224,13 +224,13 @@ class Essence.Application extends Essence.Controller
   # session, or if remember is true, in the local
   # storage until log out.
   #
-  # The logged in user is stored as Recomy.application.currentUser.
+  # The logged in user is stored as Essence.application.currentUser.
   #
   # The redirection is either a boolean flag that indicates whether the
   # user should be redirected by the default triage, or if it's a string,
   # the custom redirect location after login.
   #
-  # @param [Recomy.Models.User] user the user to log in
+  # @param [Essence.Models.User] user the user to log in
   # @param [Boolean] remember whether the user should be remembered
   # @param [Boolean, String] redirect the user after login
   #
@@ -267,7 +267,7 @@ class Essence.Application extends Essence.Controller
         else
           Backbone.history.navigate '/dashboard', true
 
-  # Logout the user from the Recomy application by removing
+  # Logout the user from the Essence application by removing
   # any stored authenticated related stuff.
   #
   # This also informs the server, since the backend keeps track
@@ -280,7 +280,7 @@ class Essence.Application extends Essence.Controller
       type: 'DELETE'
 
       error: ->
-        Recomy.collections.notifications().uniqueAdd
+        Essence.collections.notifications().uniqueAdd
           message: I18n.t('frontend.messages.error_logout')
           type: 'error'
 
@@ -296,13 +296,13 @@ class Essence.Application extends Essence.Controller
 
         Backbone.history.navigate('/jobs', true) if redirect
 
-        Recomy.collections.notifications().uniqueAdd
+        Essence.collections.notifications().uniqueAdd
           message: I18n.t('frontend.messages.successful_logout')
           type: 'success'
 
         App.trigger 'logout:user'
 
-  # Sets the Marionette renderer to the custome Recomy renderer
+  # Sets the Marionette renderer to a custom renderer.
   #
   setRenderer: ->
     Backbone.Marionette.Renderer.render = @renderTemplate
@@ -346,7 +346,7 @@ class Essence.Application extends Essence.Controller
   # @param [String] type the notification type
   #
   notify: (message, type = 'success') ->
-    Recomy.collections.notifications().uniqueAdd
+    Essence.collections.notifications().uniqueAdd
       message: message
       type: type
 
