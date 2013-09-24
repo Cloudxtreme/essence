@@ -28,10 +28,11 @@ end
 group :test, :development do
   gem 'bullet'
   gem 'debugger'
-  gem 'fabrication', require: false
-  gem 'forgery'    , require: false
-  gem 'jasminerice', :git => 'https://github.com/bradphelan/jasminerice.git'
-  gem 'pry'        , require: false
+  gem 'fabrication'  , require: false
+  gem 'forgery'      , require: false
+  gem 'guard-jasmine', require: false
+  gem 'jasminerice'  , :git => 'https://github.com/bradphelan/jasminerice.git'
+  gem 'pry'          , require: false
   gem 'pry-coolline' , require: false
   gem 'pry-rails'
   gem 'pry-doc'      , require: false
