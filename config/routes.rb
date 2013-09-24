@@ -1,10 +1,9 @@
 Essence::Application.routes.draw do
 
-  get '/' => 'bootstrap#app'
+  get '/' => 'backbone#start'
 
-  # Catch all route for bootstrapping the RECOMY Backbone application.
-  # Needs to be below ActiveAdmin
+  # Pass all routes to the Backbone application.
   # 
-  get '*path' => 'bootstrap#app'
+  get '*path' => 'backbone#start'
 
 end
