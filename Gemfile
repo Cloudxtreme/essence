@@ -30,7 +30,7 @@ group :test, :development do
   gem 'debugger'
   gem 'fabrication', require: false
   gem 'forgery'    , require: false
-  #gem 'jasminerice'
+  gem 'jasminerice', :git => 'https://github.com/bradphelan/jasminerice.git'
   gem 'pry'        , require: false
   gem 'pry-coolline' , require: false
   gem 'pry-rails'
