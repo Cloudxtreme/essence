@@ -1,0 +1,22 @@
+input
+  background-color: $dark-blue
+  color: $light-yellow
+
+  border-radius: 4px
+  border: none
+
+  box-shadow: 0 1px 2px rgba(0,0,0,0.2) inset, 0 -1px 0 rgba(0,0,0,0.05) inset
+  transition: all 0.2s linear
+
+  height: 36px
+  padding: 0 10px
+
+  &::-webkit-input-placeholder
+    color: $light-gray
+  
+  &:-moz-placeholder
+    color: $light-gray
+      
+  &:focus
+    box-shadow: 0 1px 0 $pale-yellow inset, 0 -1px 0 $pale-yellow inset, 1px 0 0 $pale-yellow inset, -1px 0 0 $pale-yellow inset, 0 0 4px rgba(35,146,243,0.5)
+    outline: none
