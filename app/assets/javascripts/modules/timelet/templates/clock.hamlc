@@ -1,9 +1,10 @@
-%section.hidden.countdown
-  %span.timer= @timer
-  %span seconds to go
+%h2 Your Clock
+
+%section.countdown
+  %span.timer= if @timer then @timer else '--'
+  %span.appendix seconds to go
 
 %section.clock
-  %h2 Your Clock
   %label
     %input.duration{ type: 'text', value: @duration }
     seconds

@@ -27,7 +27,7 @@ class Essence.Views.Clock extends Backbone.Marionette.ItemView
     # Stop a previous timer if any
     clearInterval @timer if @timer
 
-    @ui.countdown.slideDown()
+    @ui.countdown.addClass 'active'
     @timer = setInterval @tick, 1000
 
   # Decrements the timer value by one.
