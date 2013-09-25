@@ -5,10 +5,10 @@
 %section.clock
   %h2 Your Clock
   %label
-    %input.duration{ type: 'number', min: 1, value: @duration }
+    %input.duration{ type: 'text', value: @duration }
     seconds
   %button.start Run
 
 %section.controls
-  %input.name{ type: 'text' }
+  %input.name{ type: 'text', placeholder: 'Choose a name' }
   %button.save Save

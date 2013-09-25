@@ -5,7 +5,8 @@
     float: left
 
     section.countdown
-      width: 100%
+      padding: 10px 0
+      margin: 20px 0
 
       float: left
       clear: both
@@ -13,13 +14,26 @@
       span.timer
         font-size: 50px
         font-family: 'Courier New', Courier, monospace
+        background-color: $dark-blue
+        padding: 10px
+        border-radius: 10px
+
+      span.appendix
+        display: none
+
+      &.active
+        span.appendix
+          display: inline
 
     section.clock
       float: left
+      clear: both
+
+      input.duration
+        width: 40px
 
     section.controls
-      float: left
-      clear: both
+      float: right
 
   article.inventory
     width: 100%
