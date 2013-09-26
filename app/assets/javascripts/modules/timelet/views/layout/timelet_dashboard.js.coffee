@@ -1,7 +1,7 @@
 # Timelet dashboard area.
 #
 class Essence.Views.TimeletDashboard extends Backbone.Marionette.Layout
-  template: 'modules/timelet/templates/timelet_dashboard'
+  template: 'modules/timelet/templates/dashboard'
 
   regions:
     preview:   'article.preview'
