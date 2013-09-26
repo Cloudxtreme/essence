@@ -20,8 +20,9 @@ class Essence.Views.Clock extends Backbone.Marionette.ItemView
   initialize: ->
     @model.set timer: @model.get('duration')
     @listenTo @model, 'change:timer', @renderTimer
+    @listenTo @model, 'change:running', @renderPlayButton
 
-  # Starts a timer with the value stored in the model.
+  # Starts or pauses a timer with the value stored in the model.
   #
   # @param [jQuery.Event] event the click event
   #
@@ -29,11 +30,10 @@ class Essence.Views.Clock extends Backbone.Marionette.ItemView
     if @running
       clearInterval @running
       delete @running
-      @ui.start.text '\uF04B'
-      return
-
-    @ui.start.text '\uF04C'
-    @running = setInterval @tick, 1000
+      @model.set 'running', false
+    else
+      @running = setInterval @tick, 1000
+      @model.set 'running', true
 
   # Start editing the name of the timelet.
   #
@@ -65,3 +65,6 @@ class Essence.Views.Clock extends Backbone.Marionette.ItemView
   #
   renderTimer: =>
     @ui.timer.text @model.get('timer')
+
+  renderPlayButton: =>
+    @ui.start.text if @running then '\uF04C' else '\uF04B'
