@@ -37,7 +37,8 @@ class Essence.Timelet extends Essence.Controller
   #
   class @Router extends Backbone.Marionette.AppRouter
     appRoutes:
-      'timelet': 'dashboard'
+      'timelet/:id': 'dashboard'
+      'timelet':     'dashboard'
 
   # Start the routing
   #
@@ -57,7 +58,7 @@ class Essence.Timelet extends Essence.Controller
 
   # Shows the timelets dashboard.
   #
-  dashboard: ->
+  dashboard: (id) ->
     @setup()
 
-    @layout.dashboard.show new Essence.Views.TimeletDashboard
+    @layout.dashboard.show new Essence.Views.TimeletDashboard(id: id)

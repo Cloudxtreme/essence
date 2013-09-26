@@ -57,7 +57,8 @@ class Essence.Views.Clock extends Backbone.Marionette.ItemView
   #
   updateName: (event) =>
     @model.set name: @ui.title.text()
-    @ui.save.fadeIn() if @model.hasChanged('name')
+    if @model.hasChanged('name')
+      @ui.save.fadeIn()
 
   # Stores the duration of the timelet
   #

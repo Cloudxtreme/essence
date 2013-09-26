@@ -1,1 +1,5 @@
-%section.timelet a timelet
+%section.timelet
+  %span.name= @name
+  %span.duration= "(#{ @duration }s)"
+  %a.button.icon.edit{ href: "/timelet/#{ @id }" } \uF040
+  %span.button.icon.delete \uF00D
