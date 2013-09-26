@@ -4,6 +4,7 @@ gem 'rails', '4.0.0'
 
 gem 'backbone-on-rails'
 gem 'coffee-rails', '~> 4.0.0'
+gem 'font-awesome-rails'
 gem 'haml_coffee_assets'
 gem 'haml-rails'
 gem 'i18n-js'
