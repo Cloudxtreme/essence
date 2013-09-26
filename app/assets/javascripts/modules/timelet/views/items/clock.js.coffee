@@ -2,6 +2,8 @@
 #
 class Essence.Views.Clock extends Backbone.Marionette.ItemView
   template: 'modules/timelet/templates/clock'
+  className: 'timelet'
+  tagName: 'section'
 
   ui:
     clock:     'section.clock'

@@ -4,13 +4,13 @@ class Essence.Views.TimeletDashboard extends Backbone.Marionette.Layout
   template: 'modules/timelet/templates/dashboard'
 
   regions:
-    preview:   'article.preview'
-    inventory: 'article.inventory'
+    clock:    'article.clock'
+    timelets: 'article.timelets'
 
   initialize: ->
-    @timelet = new Essence.Models.Timelet duration: 50
-    @timelets = new Backbone.Collection
+    @model = new Essence.Models.Timelet duration: 50
+    @collection = new Backbone.Collection
 
   onRender: ->
-    @preview.show new Essence.Views.Clock(model: @timelet, parent: @)
-    @inventory.show new Essence.Views.Timelets(collection: @timelets, parent: @)
+    @clock.show new Essence.Views.Clock(model: @model, parent: @)
+    @timelets.show new Essence.Views.Timelets(collection: @collection, parent: @)
