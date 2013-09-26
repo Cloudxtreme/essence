@@ -48,7 +48,8 @@ class Essence.Views.Clock extends Backbone.Marionette.ItemView
   # @param [jQuery.Event] event the click event
   #
   save: (event) =>
-    @collection.add @model
+    @collection.add @model, merge: true
+    @model.save()
 
   # Stores the name of the timelet
   #

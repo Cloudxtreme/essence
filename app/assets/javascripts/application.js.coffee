@@ -10,6 +10,7 @@
 #= require backbone/backbone-forms/list
 #= require backbone/deep-model
 #= require backbone/backbone.collectionsubset
+#= require backbone/backbone.localstorage.js
 #= require select2
 #
 #= require ./lib/namespaces

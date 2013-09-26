@@ -7,9 +7,16 @@ class Essence.Views.TimeletDashboard extends Backbone.Marionette.Layout
     clock:    'article.clock'
     timelets: 'article.timelets'
 
-  initialize: ->
-    @model = new Essence.Models.Timelet duration: 50, name: 'My Timelet'
-    @collection = new Backbone.Collection
+  initialize: (params) ->
+    @model = new Essence.Models.Timelet
+    if params.id
+      @model.set id: params.id
+      @model.fetch()
+    else
+      @model.set duration: 50, name: 'My Timelet'
+
+    @collection = new Essence.Collections.Timelets
+    @collection.fetch()
 
   onRender: ->
     @clock.show new Essence.Views.Clock(model: @model, collection: @collection, parent: @)
