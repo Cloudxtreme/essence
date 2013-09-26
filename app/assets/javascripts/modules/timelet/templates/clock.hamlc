@@ -1,4 +1,6 @@
-%h2 Your Clock
+.title
+  %span.name.editable{ contentEditable: 'true' } My Timelet
+  %span.button.icon.save{ title: 'save this timelet' } \uF0C7
 
 %section.countdown
   %span.timer= if @timer then @timer else '--'

@@ -6,15 +6,16 @@ class Essence.Views.Clock extends Backbone.Marionette.ItemView
   tagName: 'section'
 
   ui:
-    clock:     'section.clock'
-    countdown: 'section.countdown'
-    timer:     'section.countdown .timer'
-    controls:  'section.controls'
-    duration:  'section.clock input.duration'
+    title: 'div.title .name'
+    save:  'div.title .save'
+    timer: 'div.timer .time'
+    start: 'div.timer .start'
 
   events:
-    'click .start':     'startTimer'
-    'change .duration': 'updateDuration'
+    'click  div.timer .start': 'startTimer'
+    'change div.timer span':   'updateDuration'
+    'focus  div.title span':   'startEditName'
+    'blur   div.title span':   'stopEditName'
 
   initialize: ->
     @listenTo @model, 'change:timer', @renderTimer
@@ -29,8 +30,21 @@ class Essence.Views.Clock extends Backbone.Marionette.ItemView
     # Stop a previous timer if any
     clearInterval @timer if @timer
 
-    @ui.countdown.addClass 'active'
     @timer = setInterval @tick, 1000
+
+  # Start editing the name of the timelet.
+  #
+  # @param [jQuery.Event] event the click event
+  #
+  startEditName: (event) =>
+    @ui.save.fadeIn()
+
+  # Stop editing the name of the timelet.
+  #
+  # @param [jQuery.Event] event the click event
+  #
+  stopEditName: (event) =>
+    @ui.save.fadeOut()
 
   # Decrements the timer value by one.
   #
