@@ -9,7 +9,7 @@ class Essence.Views.Clock extends Backbone.Marionette.ItemView
     title: 'div.title .name'
     save:  'div.title .save'
     timer: 'div.timer .time'
-    start: 'div.timer .start'
+    start: 'div.timer .play'
 
   events:
     'click  div.timer .start': 'startTimer'

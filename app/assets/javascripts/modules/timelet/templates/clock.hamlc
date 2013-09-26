@@ -4,4 +4,4 @@
 
 .timer
   %span.time= if @timer then @timer else '--'
-  %span.button.icon.start \uF04B
+  %span.button.icon.play \uF04B
