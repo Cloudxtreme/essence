@@ -1,4 +1,5 @@
 %h2 Timelets
 
 %section.timelets
+  %a.button.icon.play{ title: 'Add a new timelet', href: '/timelet' } \uF067
   %ul
