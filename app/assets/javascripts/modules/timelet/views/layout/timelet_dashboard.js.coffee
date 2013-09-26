@@ -12,8 +12,6 @@ class Essence.Views.TimeletDashboard extends Backbone.Marionette.Layout
     if params.id
       @model.set id: params.id
       @model.fetch()
-    else
-      @model.set duration: 50, name: 'My Timelet'
 
     @collection = new Essence.Collections.Timelets
     @collection.fetch()
