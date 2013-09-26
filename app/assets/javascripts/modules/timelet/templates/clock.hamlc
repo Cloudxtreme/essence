@@ -3,5 +3,5 @@
   %span.button.icon.save{ title: 'save this timelet' } \uF0C7
 
 .timer
-  %span.time= if @timer then @timer else '--'
+  %span.time= @timer
   %span.button.icon.play \uF04B
