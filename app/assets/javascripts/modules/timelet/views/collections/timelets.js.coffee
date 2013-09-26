@@ -8,3 +8,6 @@ class Essence.Views.Timelets extends Backbone.Marionette.CompositeView
   itemViewContainer: 'section.timelets ul'
 
   emptyView: Essence.Views.NoTimelet
+
+  initialize: ->
+    @listenTo @collection, 'change', @render
