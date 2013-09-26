@@ -2,16 +2,6 @@
   %span.name.editable{ contentEditable: 'true' } My Timelet
   %span.button.icon.save{ title: 'save this timelet' } \uF0C7
 
-%section.countdown
-  %span.timer= if @timer then @timer else '--'
-  %span.appendix seconds to go
-
-%section.clock
-  %label
-    %input.duration{ type: 'text', value: @duration }
-    seconds
-  %button.start Run
-
-%section.controls
-  %input.name{ type: 'text', placeholder: 'Choose a name' }
-  %button.save Save
+.timer
+  %span.time= if @timer then @timer else '--'
+  %span.button.icon.start \uF04B

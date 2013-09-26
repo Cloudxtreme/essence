@@ -4,36 +4,28 @@
     width: 100%
     float: left
 
-    section.countdown
-      padding: 10px 0
-      margin: 20px 0
-
+    section.timelet
       float: left
       clear: both
 
-      span.timer
+      padding-bottom: 20px
+
+      .title
+        height: 2em
+        padding: 20px 0
+
+        .save
+          display: none
+
+      .timer
         font-size: 50px
-        font-family: 'Courier New', Courier, monospace
-        background-color: $dark-blue
-        padding: 10px
-        border-radius: 10px
+        vertical-align: bottom
 
-      span.appendix
-        display: none
-
-      &.active
-        span.appendix
-          display: inline
-
-    section.clock
-      float: left
-      clear: both
-
-      input.duration
-        width: 40px
-
-    section.controls
-      float: right
+        .time
+          font-family: monospace
+          background-color: $dark-blue
+          padding: 10px
+          border-radius: 10px
 
   article.timelets
     width: 100%
