@@ -12,36 +12,52 @@ class Essence.Views.Clock extends Backbone.Marionette.ItemView
     start: 'div.timer .play'
 
   events:
-    'click div.timer .play': 'startTimer'
+    'click div.timer .play': 'playTimelet'
     'blur  div.timer .time': 'updateDuration'
     'blur  div.title .name': 'updateName'
     'click div.title .save': 'save'
 
   initialize: ->
-    @model.set timer: @model.get('duration')
+    @model.set running: false
     @listenTo @model, 'change:timer', @renderTimer
     @listenTo @model, 'change:running', @renderPlayButton
+    @listenTo @model, 'sync', @render
 
-  # Starts or pauses a timer with the value stored in the model.
+  # Starts or pauses the current timer.
+  #
+  # Does nothing if the timer is not valid.
   #
   # @param [jQuery.Event] event the click event
   #
-  startTimer: (event) =>
-    # FIXME Move @running to @model
-    if @running
-      clearInterval @running
-      delete @running
-      @model.set 'running', false
-      @ui.timer.attr 'contentEditable', 'true'
+  playTimelet: (event) =>
+    if @model.get('running')
+      @stopTimelet()
     else
-      @running = setInterval @tick, 1000
-      @model.set 'running', true
-      @ui.timer.removeAttr 'contentEditable'
+      @startTimelet()
+
+  # Starts the current timer.
+  #
+  startTimelet: ->
+    return unless @model.isValid()
+
+    @ui.timer.removeAttr 'contentEditable'
+    @model.set running: true
+    @running = setInterval @tick, 1000
+
+  # Stops the current timer.
+  #
+  stopTimelet: ->
+    clearInterval @running
+    delete @running
+
+    @model.set running: false
+    @ui.timer.attr 'contentEditable', 'true'
 
   # Decrements the timer value by one.
   #
   tick: =>
     @model.set timer: (@model.get('timer') - 1)
+    @stopTimelet() unless @model.isValid()
 
   # Saves the timelet to the collection.
   #
@@ -66,7 +82,9 @@ class Essence.Views.Clock extends Backbone.Marionette.ItemView
   #
   updateDuration: (event) =>
     if duration = parseInt @ui.timer.text()
-      @model.set duration: duration
+      @model.set
+        duration: duration
+        timer: duration
     @ui.save.fadeIn() if @model.hasChanged('duration')
 
   # Render the current timer value.
@@ -77,4 +95,4 @@ class Essence.Views.Clock extends Backbone.Marionette.ItemView
   # Render the play button depending on the status of the timelet.
   #
   renderPlayButton: =>
-    @ui.start.text if @running then '\uF04C' else '\uF04B'
+    @ui.start.text if @model.get('running') then '\uF04C' else '\uF04B'

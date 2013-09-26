@@ -105,7 +105,7 @@ class Essence.Application extends Essence.Controller
   # @param [String] url The URL that was not matched by any other route
   #
   handleFallbackRoute: (url) ->
-    Backbone.history.navigate '/error/404', true
+    #Backbone.history.navigate '/error/404', true
 
   handleNopRouter: ->
 
