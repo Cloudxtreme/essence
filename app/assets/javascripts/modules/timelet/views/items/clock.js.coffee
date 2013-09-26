@@ -12,10 +12,10 @@ class Essence.Views.Clock extends Backbone.Marionette.ItemView
     start: 'div.timer .play'
 
   events:
-    'click  div.timer .start': 'startTimer'
-    'change div.timer span':   'updateDuration'
-    'focus  div.title span':   'startEditName'
-    'blur   div.title span':   'stopEditName'
+    'click  div.timer .play':  'startTimer'
+    'change div.timer .name':  'updateDuration'
+    'focus  div.title .name':  'startEditName'
+    'blur   div.title .name':  'stopEditName'
 
   initialize: ->
     @model.set timer: @model.get('duration')
