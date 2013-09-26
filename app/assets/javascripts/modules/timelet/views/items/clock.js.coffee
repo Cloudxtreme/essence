@@ -18,6 +18,7 @@ class Essence.Views.Clock extends Backbone.Marionette.ItemView
     'blur   div.title span':   'stopEditName'
 
   initialize: ->
+    @model.set timer: @model.get('duration')
     @listenTo @model, 'change:timer', @renderTimer
 
   # Starts a timer with the value stored in the model.
