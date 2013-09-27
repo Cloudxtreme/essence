@@ -6,7 +6,7 @@ env:
   global:
     - RAILS_ENV=test
     - JS_DRIVER=phantomjs
-script: 'rake spec && bundle exec guard-jasmine --server-timeout=300'
+script: 'rake suite'
 notifications:
   recipients:
     - kaethorn@gmail.com
