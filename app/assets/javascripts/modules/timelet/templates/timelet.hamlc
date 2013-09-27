@@ -1,5 +1,5 @@
 %section.timelet
-  %a.button.icon.load \uF01D
+  %span.button.icon.load
   %span.name= @name
   %span.duration= "(#{ @duration }s)"
-  %span.button.icon.delete \uF00D
+  %span.button.icon.delete

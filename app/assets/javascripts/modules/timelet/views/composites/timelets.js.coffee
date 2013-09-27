@@ -139,4 +139,4 @@ class Essence.Views.Timelets extends Backbone.Marionette.CompositeView
   # Render the play button depending on the status of the timelet.
   #
   renderPlayButton: =>
-    @ui.clockStart.text if @model.get('running') then '\uF04C' else '\uF04B'
+    @ui.clockStart.toggleClass 'running', @model.get('running')

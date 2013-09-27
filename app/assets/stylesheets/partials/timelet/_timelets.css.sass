@@ -14,6 +14,8 @@
 
       .save
         display: none
+        &:after
+          content: '\F0C7'
 
     .timer
       font-size: 50px
@@ -26,9 +28,26 @@
         background-color: $dark-blue
         font-family: monospace
 
+      .play
+        &:after
+          content: '\F04B'
+
+        &.running
+          &:after
+            content: '\F04C'
+
   section.timelets
     width: 100%
     float: left
 
     ul
       list-style: none
+
+      .load:after
+        content: '\F01D'
+
+      .add:after
+        content: '\F067'
+
+      .delete:after
+        content: '\F00D'
