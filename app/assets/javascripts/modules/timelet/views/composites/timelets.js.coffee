@@ -73,13 +73,13 @@ class Essence.Views.Timelets extends Backbone.Marionette.CompositeView
 
     @ui.clockTimer.removeAttr 'contentEditable'
     @model.set running: true
-    @running = setInterval @tick, 1000
+    @runner = setInterval @tick, 1000
 
   # Stops the current timer.
   #
   stopTimelet: ->
-    clearInterval @running
-    delete @running
+    clearInterval @runner
+    delete @runner
 
     @model.set running: false
     @ui.clockTimer.attr 'contentEditable', 'true'
