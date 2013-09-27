@@ -1,4 +1,14 @@
-%h2 Timelets
+%section.clock
+  .title
+    %span.editable.name{ contentEditable: 'true' }= @name
+    %span.button.icon.save{ title: 'save this timelet' } \uF0C7
+    - if @id
+      %span.button.icon.add{ title: 'Add a new timelet' } \uF067
+
+  .timer
+    %span.time{ contentEditable: 'true' }= @timer
+    %span.button.icon.play \uF04B
 
 %section.timelets
+  %h2 Timelets
   %ul

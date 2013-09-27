@@ -17,11 +17,8 @@ class Essence.Views.Timelet extends Backbone.Marionette.ItemView
 
   # Sets the current timelet as the active one.
   #
-  # Triggers the 'load' event on the target model.
-  #
   # @param [jQuery.Event] event the click event
   #
   load: (event) =>
-    @options.activeModel.set @model.attributes, silent: true
-    @options.activeModel.trigger 'load'
+    @trigger 'timelet:load'
     Backbone.history.navigate "/timelet/#{ @model.id }"

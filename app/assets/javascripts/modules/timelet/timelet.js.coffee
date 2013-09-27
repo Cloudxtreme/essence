@@ -5,6 +5,7 @@
 #= require_directory ./collections
 #= require_directory ./views/items
 #= require_directory ./views/collections
+#= require_directory ./views/composites
 #= require_directory ./views/layout
 #
 class Essence.Timelet extends Essence.Controller
@@ -19,8 +20,7 @@ class Essence.Timelet extends Essence.Controller
       header:        'header'
       navigations:   'section.navigations'
       notifications: 'section.notifications'
-      dashboard:     'article.dashboard'
-      payOut:        'article.payout'
+      timelets:      'article.timelets'
       footer:        'footer'
 
     # Add module CSS context
@@ -37,8 +37,8 @@ class Essence.Timelet extends Essence.Controller
   #
   class @Router extends Backbone.Marionette.AppRouter
     appRoutes:
-      'timelet/:id': 'dashboard'
-      'timelet':     'dashboard'
+      'timelet/:id': 'showTimelets'
+      'timelet':     'showTimelets'
 
   # Start the routing
   #
@@ -56,9 +56,22 @@ class Essence.Timelet extends Essence.Controller
     #@layout.notifications.show new Essence.Views.Notifications()
     #@layout.footer.show new Essence.Views.Footer()
 
-  # Shows the timelets dashboard.
+  # Renders both the clock and the timelets collection.
   #
-  dashboard: (id) ->
+  # Sets up the model and collection and fetches them
+  # from the endpoint.
+  #
+  # @param [Integer] id ID of the timelet to load.
+  #
+  showTimelets: (id) ->
     @setup()
 
-    @layout.dashboard.show new Essence.Views.TimeletDashboard(id: id)
+    model = new Essence.Models.Timelet
+    if id
+      model.set id: id
+      model.fetch()
+
+    collection = new Essence.Collections.Timelets
+    collection.fetch()
+
+    @layout.timelets.show new Essence.Views.Timelets model: model, collection: collection
