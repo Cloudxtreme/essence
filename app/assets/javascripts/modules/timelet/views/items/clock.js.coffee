@@ -19,6 +19,7 @@ class Essence.Views.Clock extends Backbone.Marionette.ItemView
 
   initialize: ->
     @model.set running: false
+    @listenTo @model, 'load', @render
     @listenTo @model, 'change:timer', @renderTimer
     @listenTo @model, 'change:running', @renderPlayButton
     @listenTo @model, 'sync', @render

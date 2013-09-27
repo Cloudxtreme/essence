@@ -18,4 +18,4 @@ class Essence.Views.TimeletDashboard extends Backbone.Marionette.Layout
 
   onRender: ->
     @clock.show new Essence.Views.Clock(model: @model, collection: @collection, parent: @)
-    @timelets.show new Essence.Views.Timelets(collection: @collection, parent: @)
+    @timelets.show new Essence.Views.Timelets(collection: @collection, model: @model, parent: @)
