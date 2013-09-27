@@ -4,12 +4,9 @@ require 'rspec/rails'
 
 require 'capybara/rails'
 require 'capybara/rspec'
-require 'database_cleaner'
 require 'selenium-webdriver'
 
 require 'shoulda-matchers'
-require 'fabrication'
-require 'forgery'
 
 Dir[Rails.root.join('spec/support/**/*.rb')].each { |f| require f }
 
@@ -51,25 +48,8 @@ RSpec.configure do |config|
   config.mock_with :rspec
   config.use_transactional_fixtures                      = false
 
-  config.before(:suite) do
-    DatabaseCleaner.clean_with(:truncation)
-  end
-
-  config.before(:each) do
-    DatabaseCleaner.strategy = :transaction
-    DatabaseCleaner.start
-  end
-
-  config.before(:each, type: :feature) do
-    DatabaseCleaner.strategy = :truncation
-  end
-
   config.before(:each, type: :feature) do
     Capybara.reset_sessions!
     Capybara.current_driver = Capybara.javascript_driver
-  end
-
-  config.after(:each) do
-    DatabaseCleaner.clean
   end
 end

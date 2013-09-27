@@ -16,7 +16,6 @@ gem 'uglifier', '>= 1.3.0'
 gem 'unicorn'
 
 group :development do
-  gem 'sqlite3'
   gem 'capistrano'
 end
 
@@ -29,8 +28,6 @@ end
 group :test, :development do
   gem 'bullet'
   gem 'debugger'
-  gem 'fabrication'  , require: false
-  gem 'forgery'      , require: false
   gem 'guard-jasmine', require: false
   gem 'jasminerice'  , :git => 'https://github.com/bradphelan/jasminerice.git'
   gem 'pry'          , require: false
@@ -46,7 +43,6 @@ end
 group :test do
   gem 'capybara'           , require: false
   gem 'selenium-webdriver' , require: false
-  gem 'database_cleaner'   , require: false
   gem 'fuubar'             , require: false
   gem 'shoulda-matchers'   , require: false
 end
