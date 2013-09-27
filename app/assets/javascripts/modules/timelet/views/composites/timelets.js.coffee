@@ -34,10 +34,11 @@ class Essence.Views.Timelets extends Backbone.Marionette.CompositeView
     clockStart: 'section.clock .play'
 
   events:
-    'click section.clock .play': 'playTimelet'
-    'blur  section.clock .time': 'updateDuration'
-    'blur  section.clock .name': 'updateName'
-    'click section.clock .save': 'save'
+    'click section.clock .play':   'playTimelet'
+    'blur  section.clock .time':   'updateDuration'
+    'blur  section.clock .name':   'updateName'
+    'click section.clock .save':   'saveTimelet'
+    'click section.timelets .add': 'createTimelet'
 
   # Loads a timelet from the collection
   #
@@ -93,9 +94,22 @@ class Essence.Views.Timelets extends Backbone.Marionette.CompositeView
   #
   # @param [jQuery.Event] event the click event
   #
-  save: (event) =>
+  saveTimelet: (event) =>
     @collection.add @model, merge: true
     @model.save()
+    @render()
+
+  # Creates a new model of a timelet.
+  #
+  # First saves any changes to the current model.
+  #
+  # @param [jQuery.Event] event the click event
+  #
+  createTimelet: (event) =>
+    @model.save()
+    @model = new Essence.Models.Timelet
+    Backbone.history.navigate '/timelet'
+    @render()
 
   # Stores the name of the timelet
   #
