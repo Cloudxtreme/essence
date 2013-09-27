@@ -1,0 +1,12 @@
+language: ruby
+bundler_args: --without development
+rvm:
+  - 2.0.0
+env:
+  global:
+    - RAILS_ENV=test
+    - JS_DRIVER=phantomjs
+script: 'rake spec && bundle exec guard-jasmine --server-timeout=300'
+notifications:
+  recipients:
+    - kaethorn@gmail.com
