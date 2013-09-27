@@ -29,7 +29,7 @@
 
 # Essence Marionette Application
 #
-class Essence.Application extends Essence.Controller
+class Essence.Application
 
   # Defines the url routes the base app will handle.
   #

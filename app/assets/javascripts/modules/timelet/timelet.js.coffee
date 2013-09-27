@@ -8,7 +8,7 @@
 #= require_directory ./views/composites
 #= require_directory ./views/layout
 #
-class Essence.Timelet extends Essence.Controller
+class Essence.Timelet
 
   # Create the  HTML structure and
   # named regions for view management.
