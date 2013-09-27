@@ -18,7 +18,7 @@ Essence is a Backbone- and Marionette application running on top of Rails' asset
 Setup
 -----
 
-Install [rbenv](https://github.com/sstephenson/rbenv) and the ruby version defined in [.ruby-version](blob/master/.ruby-version).
+Install [rbenv](https://github.com/sstephenson/rbenv) and the ruby version defined in [.ruby-version](master/.ruby-version).
 
 Then, run install all gems
 
