@@ -66,12 +66,12 @@ class Essence.Timelet
   showTimelets: (id) ->
     @setup()
 
-    model = new Essence.Models.Timelet
+    collection = new Essence.Collections.Timelets
+    collection.fetch()
+
+    model = new Essence.Models.Timelet {}, collection: collection
     if id
       model.set id: id
       model.fetch()
 
-    collection = new Essence.Collections.Timelets
-    collection.fetch()
-
-    @layout.timelets.show new Essence.Views.Timelets model: model, collection: collection
+    @layout.timelets.show new Essence.Views.TimeletsPanel model: model, collection: collection

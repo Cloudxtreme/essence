@@ -1,0 +1,7 @@
+.title
+  %span.editable.name{ contentEditable: 'true' }= @name
+  %span.button.icon.save{ title: 'save this timelet' }
+
+.timer
+  %span.button.icon.play
+  %span.time{ contentEditable: 'true' }= @timer
