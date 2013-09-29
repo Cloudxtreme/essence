@@ -23,8 +23,6 @@ beforeEach ->
   window.Essence.application = new Essence.Application()
   Essence.application.start()
 
-  #Essence.collections.notifications().reset()
-
   # No animations during the spec run
   jQuery.fx.off = true
 
@@ -111,7 +109,5 @@ afterEach ->
     delete Essence.application.currentUser
     delete Essence.application.token
     delete Essence.application.loginUserDeferred
-
-  Essence?.collections?.notifications().reset()
 
   @navigation.restore()

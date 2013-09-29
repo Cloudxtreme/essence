@@ -19,7 +19,6 @@ class Essence.Timelet
     regions:
       header:        'header'
       navigations:   'section.navigations'
-      notifications: 'section.notifications'
       timelets:      'article.timelets'
       footer:        'footer'
 
@@ -53,7 +52,6 @@ class Essence.Timelet
 
     # TODO
     #@layout.header.show new Essence.Views.Header()
-    #@layout.notifications.show new Essence.Views.Notifications()
     #@layout.footer.show new Essence.Views.Footer()
 
   # Renders both the clock and the timelets collection.

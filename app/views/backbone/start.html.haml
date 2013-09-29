@@ -22,7 +22,5 @@
       $(function() {
         window.Essence.application = new Essence.Application();
 
-        //Essence.collections.notifications(#{ bootstrap_notifications });
-
-        Essence.application.start(#{ bootstrap_authentication_token }, #{ bootstrap_tracking_headers });
+        Essence.application.start();
       });

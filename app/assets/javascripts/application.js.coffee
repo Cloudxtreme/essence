@@ -163,16 +163,6 @@ class Essence.Application
       currentUser: @currentUser
     }, locals)
 
-  # Shows a user notification.
-  #
-  # @param [String] message the message to show
-  # @param [String] type the notification type
-  #
-  notify: (message, type = 'success') ->
-    Essence.collections.notifications().uniqueAdd
-      message: message
-      type: type
-
   # Reload the application
   #
   reload: ->
