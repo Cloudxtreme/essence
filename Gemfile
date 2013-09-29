@@ -16,7 +16,8 @@ gem 'uglifier', '>= 1.3.0'
 gem 'unicorn'
 
 group :development do
-  gem 'capistrano'
+  gem 'capistrano'       , require: false
+  gem 'capistrano-rbenv' , require: false
 end
 
 gem 'jbuilder', '~> 1.2'
@@ -45,4 +46,10 @@ group :test do
   gem 'selenium-webdriver' , require: false
   gem 'fuubar'             , require: false
   gem 'shoulda-matchers'   , require: false
+end
+
+group :production do
+  gem 'newrelic_rpm'
+  gem 'therubyracer'
+  gem 'libv8'
 end
