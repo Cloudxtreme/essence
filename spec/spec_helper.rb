@@ -54,4 +54,10 @@ RSpec.configure do |config|
     Capybara.reset_sessions!
     Capybara.current_driver = Capybara.javascript_driver
   end
+
+  config.after(:each, type: :feature) do
+    page.execute_script <<-JS
+      localStorage.clear()
+    JS
+  end
 end
