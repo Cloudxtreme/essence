@@ -46,7 +46,7 @@ class Essence.Views.Timelets extends Backbone.Marionette.CompositeView
   #
   loadTimelet: (timelet) ->
     @stopTimelet()
-    @model.set timelet.attributes, silent: true
+    @model = @collection.get timelet
     @model.set
       timer: @model.get('duration')
       running: false

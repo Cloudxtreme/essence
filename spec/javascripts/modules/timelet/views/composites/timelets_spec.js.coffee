@@ -48,8 +48,10 @@ describe 'Essence.Views.Timelets', ->
 
     it 'loads the timelet on timelet load', ->
       spy = sinon.spy @view, 'loadTimelet'
-      @view.trigger 'itemview:timelet:load', model: 'modelStub'
-      expect(spy).toHaveBeenCalledWith 'modelStub'
+      model = new Essence.Models.Timelet
+      @view.collection.add model
+      @view.trigger 'itemview:timelet:load', model: model
+      expect(spy).toHaveBeenCalledWith model
       spy.restore()
 
   describe '#render', ->
@@ -77,12 +79,16 @@ describe 'Essence.Views.Timelets', ->
 
     it 'loads the timelets attributes into the clock', ->
       expect(@model.get('name')).toEqual 'Awesome timer'
-      @view.loadTimelet new Essence.Models.Timelet name: 'Fantasic timer'
-      expect(@model.get('name')).toEqual 'Fantasic timer'
+      model = new Essence.Models.Timelet name: 'Fantasic timer'
+      @view.collection.add model
+      @view.loadTimelet model
+      expect(@view.model.get('name')).toEqual 'Fantasic timer'
 
     it 'renders the timelets into the clock', ->
       expect(@html.find('section.clock')).toContainText 'Awesome timer'
-      @view.loadTimelet new Essence.Models.Timelet name: 'Fantasic timer'
+      model = new Essence.Models.Timelet name: 'Fantasic timer'
+      @view.collection.add model
+      @view.loadTimelet model
       expect(@html.find('section.clock')).toContainText 'Fantasic timer'
 
   describe '#playTimelet', ->
