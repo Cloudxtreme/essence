@@ -24,7 +24,7 @@ class Essence.Views.TimeletsPanel extends Backbone.Marionette.Layout
   #
   # @param [String] id The ID of the model to load
   #
-  loadTimelet: (id) ->
+  loadTimelet: (id) =>
     @clock.currentView.stopTimelet()
     @model = @collection.get id
 

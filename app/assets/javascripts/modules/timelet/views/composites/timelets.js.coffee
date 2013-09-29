@@ -11,13 +11,16 @@ class Essence.Views.Timelets extends Backbone.Marionette.CompositeView
   itemView: Essence.Views.Timelet
   emptyView: Essence.Views.NoTimelet
 
+  ui:
+    timelets: 'ul'
+
   events:
     'click .add': 'createTimelet'
 
   initialize: ->
     @listenTo @collection, 'sync', @render
     @on 'itemview:timelet:load', (viewItem) =>
-      @options.parent.trigger 'timelet:load', id: viewItem.model.id
+      @options.parent.trigger 'timelet:load', viewItem.model.id
 
   # Creates a new model of a timelet.
   #
