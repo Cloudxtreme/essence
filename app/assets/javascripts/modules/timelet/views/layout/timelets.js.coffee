@@ -42,7 +42,7 @@ class Essence.Views.TimeletsPanel extends Backbone.Marionette.Layout
   # First saves any changes to the current model.
   #
   createTimelet: =>
-    @model = new Essence.Models.Timelet collection: @collection
+    @model = new Essence.Models.Timelet {}, collection: @collection
 
     @clock.currentView.model.save()
     @clock.show new Essence.Views.Clock model: @model, parent: @
