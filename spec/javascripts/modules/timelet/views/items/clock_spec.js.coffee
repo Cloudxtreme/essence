@@ -201,17 +201,17 @@ describe 'Essence.Views.Clock', ->
     describe 'with a running clock', ->
       beforeEach ->
         @view.model.set running: true
-        @view.ui.clockStart.removeClass 'running'
+        @view.ui.timer.removeClass 'running'
 
       it 'sets the running class to the start button', ->
         @view.renderPlayButton()
-        expect(@view.ui.clockStart).toHaveClass 'running'
+        expect(@view.ui.timer).toHaveClass 'running'
 
     describe 'with a stopped clock', ->
       beforeEach ->
         @view.model.set running: false
-        @view.ui.clockStart.addClass 'running'
+        @view.ui.timer.addClass 'running'
 
       it 'removes the running class from the start button', ->
         @view.renderPlayButton()
-        expect(@view.ui.clockStart).not.toHaveClass 'running'
+        expect(@view.ui.timer).not.toHaveClass 'running'

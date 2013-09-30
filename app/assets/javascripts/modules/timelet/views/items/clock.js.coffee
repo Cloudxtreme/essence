@@ -95,4 +95,4 @@ class Essence.Views.Clock extends Backbone.Marionette.ItemView
   # Render the play button depending on the status of the timelet.
   #
   renderPlayButton: =>
-    @ui.clockStart.toggleClass 'running', @model.get('running')
+    @ui.timer.toggleClass 'running', @model.get('running')

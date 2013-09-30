@@ -32,7 +32,12 @@
         &:after
           content: '\F04B'
 
-        &.running
+      .reset
+        &:after
+          content: '\F048'
+
+      &.running
+        .play
           &:after
             content: '\F04C'
 
