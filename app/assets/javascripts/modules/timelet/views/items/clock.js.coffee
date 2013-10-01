@@ -11,6 +11,7 @@ class Essence.Views.Clock extends Backbone.Marionette.ItemView
     @listenTo @model, 'change:running', @renderPlayButton
 
   ui:
+    timer:      '.timer'
     clockTitle: '.name'
     clockSave:  '.save'
     clockTimer: '.time'

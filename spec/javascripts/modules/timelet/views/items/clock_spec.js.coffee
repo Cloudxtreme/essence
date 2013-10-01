@@ -37,9 +37,9 @@ describe 'Essence.Views.Clock', ->
 
     it 'renders the button on status change', ->
       @model.set running: false
-      expect(@view.ui.clockStart).not.toHaveClass 'running'
+      expect(@view.ui.timer).not.toHaveClass 'running'
       @model.set running: true
-      expect(@view.ui.clockStart).toHaveClass 'running'
+      expect(@view.ui.timer).toHaveClass 'running'
 
   describe '#render', ->
     it 'shows the clock', ->
