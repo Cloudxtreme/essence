@@ -37,6 +37,21 @@ module Support
       end
     end
 
+    # Initializes a fake clock in the browser.
+    #
+    def fake_time
+      page.execute_script 'window.clock = sinon.useFakeTimers();'
+    end
+
+    # Skip time ahead in the browser.
+    #
+    # Requires to run @fake_time before.
+    #
+    # @param [Integer] duration Time in seconds
+    #
+    def advance(duration)
+      page.execute_script "window.clock.tick(#{ duration * 1000 });"
+    end
   end
 
 end
