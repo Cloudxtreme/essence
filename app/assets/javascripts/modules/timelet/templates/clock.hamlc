@@ -4,4 +4,5 @@
 
 .timer
   %span.button.icon.play
+  %span.button.icon.reset
   %span.time{ contentEditable: 'true' }= @timer

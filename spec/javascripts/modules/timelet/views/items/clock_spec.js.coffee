@@ -94,6 +94,68 @@ describe 'Essence.Views.Clock', ->
         @view.startTimelet()
         expect(@view.ui.clockTimer).not.toHaveAttr 'contentEditable'
 
+  describe '#restartTimelet', ->
+
+    describe 'with a finished timelet', ->
+      beforeEach ->
+        @model.set
+          timer: 0
+          running: false
+
+      it 'restores the timer', ->
+        expect(@view.model.get('timer')).toEqual 0
+        @view.restartTimelet()
+        expect(@view.model.get('timer')).toEqual 42
+
+      it 'does not start the timelet', ->
+        expect(@view.model.get('running')).toBeFalsy()
+        @view.restartTimelet()
+        expect(@view.model.get('running')).toBeFalsy()
+        expect(@view.runner).toBeUndefined()
+
+    describe 'with an invalid timelet', ->
+      beforeEach ->
+        @model.set duration: 'abc'
+
+      it 'restores the timer', ->
+        expect(@view.model.get('timer')).toEqual 10
+        @view.restartTimelet()
+        expect(@view.model.get('timer')).toEqual 'abc'
+
+      it 'does nothing', ->
+        @view.restartTimelet()
+        expect(@view.runner).toBeUndefined()
+
+    describe 'with a paused timelet', ->
+      beforeEach ->
+        @model.set running: false
+
+      it 'restores the timer', ->
+        expect(@view.model.get('timer')).toEqual 10
+        @view.restartTimelet()
+        expect(@view.model.get('timer')).toEqual 42
+
+      it 'does not start the timelet', ->
+        expect(@view.model.get('running')).toBeFalsy()
+        @view.restartTimelet()
+        expect(@view.model.get('running')).toBeFalsy()
+        expect(@view.runner).toBeUndefined()
+
+    describe 'with a running timelet', ->
+      beforeEach ->
+        @model.set running: true
+
+      it 'restores the timer', ->
+        expect(@view.model.get('timer')).toEqual 10
+        @view.restartTimelet()
+        expect(@view.model.get('timer')).toEqual 42
+
+      it 'does not stop the timelet', ->
+        expect(@view.model.get('running')).toBeTruthy()
+        @view.restartTimelet()
+        expect(@view.model.get('running')).toBeTruthy()
+        expect(@view.runner).toBeDefined()
+
   describe '#stopTimelet', ->
     it 'stops the countdown', ->
       @view.runner = 123
