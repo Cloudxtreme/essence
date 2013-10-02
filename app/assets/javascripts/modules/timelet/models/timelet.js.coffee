@@ -62,7 +62,7 @@ class Essence.Models.Timelet extends Backbone.Model
   # Restarts the timer.
   #
   restart: ->
-    @set timer: @model.get('duration')
+    @set timer: @get('duration')
     if @isRunning()
       @stop()
       @start()
