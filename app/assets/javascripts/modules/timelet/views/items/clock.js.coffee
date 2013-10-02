@@ -19,7 +19,7 @@ class Essence.Views.Clock extends Backbone.Marionette.ItemView
     clockStart: '.play'
 
   events:
-    'click .play':  'playTimelet'
+    'click .play':  'pauseTimelet'
     'click .reset': 'restartTimelet'
     'blur  .time':  'updateDuration'
     'blur  .name':  'updateName'
@@ -27,10 +27,7 @@ class Essence.Views.Clock extends Backbone.Marionette.ItemView
 
   # Starts or pauses the current timer.
   #
-  # Does nothing if the timer is not valid.
-  #
-  playTimelet: ->
-    @model.pause()
+  pauseTimelet: -> @model.pause()
 
   # Restarts the current timer.
   #
