@@ -31,20 +31,15 @@ class Essence.Views.Clock extends Backbone.Marionette.ItemView
 
   # Restarts the current timer.
   #
-  # Starts the timer again only if it was running already.
-  #
-  restartTimelet: ->
-    @model.restart()
+  restartTimelet: -> @model.restart()
 
   # Starts the current timer.
   #
-  startTimelet: ->
-    @model.start()
+  startTimelet: -> @model.start()
 
   # Stops the current timer.
   #
-  stopTimelet: ->
-    @model.stop()
+  stopTimelet: -> @model.stop()
 
   # Saves the timelet to the collection.
   #
