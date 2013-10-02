@@ -33,7 +33,7 @@ class Essence.Models.Timelet extends Backbone.Model
   #
   # @return [Boolean] `false` if the timer finished, otherwise `true`
   #
-  tick: ->
+  tick: =>
     @set timer: (@get('timer') - 1)
     @stop() if @isFinished()
 
