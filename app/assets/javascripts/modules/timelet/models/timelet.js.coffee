@@ -39,6 +39,7 @@ class Essence.Models.Timelet extends Backbone.Model
   #
   start: ->
     return unless @isValid()
+    return if @isRunning()
 
     @set running: true
     @runner = setInterval @tick, 1000
