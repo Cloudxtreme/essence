@@ -9,6 +9,7 @@ class Essence.Views.Clock extends Backbone.Marionette.ItemView
 
     @listenTo @model, 'change:timer', @renderTimer
     @listenTo @model, 'change:running', @renderPlayButton
+    @listenTo @model, 'change:running', @toggleTimerEditability
 
   ui:
     timer:      '.timer'
@@ -86,3 +87,15 @@ class Essence.Views.Clock extends Backbone.Marionette.ItemView
   #
   renderPlayButton: =>
     @ui.timer.toggleClass 'running', @model.get('running')
+
+  # Allow the timer field to be edited only when the Timelet is
+  # not running.
+  #
+  # @param [Backbone.Model] model Model of the timelet
+  # @param [Boolean] running flag indicating if the timer is running
+  #
+  toggleTimerEditability: (model, running) =>
+    if running
+      @ui.clockTimer.removeAttr 'contentEditable'
+    else
+      @ui.clockTimer.attr 'contentEditable', 'true'
