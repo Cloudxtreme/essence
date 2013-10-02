@@ -31,8 +31,6 @@ class Essence.Models.Timelet extends Backbone.Model
 
   # Decrements the timer value by one until it reaches zero.
   #
-  # @return [Boolean] `false` if the timer finished, otherwise `true`
-  #
   tick: =>
     @set timer: (@get('timer') - 1)
     @stop() if @isFinished()
@@ -44,7 +42,6 @@ class Essence.Models.Timelet extends Backbone.Model
 
     @set running: true
     @runner = setInterval @tick, 1000
-    true
 
   # Stops the timer.
   #
