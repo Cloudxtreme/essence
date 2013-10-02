@@ -28,51 +28,25 @@ class Essence.Views.Clock extends Backbone.Marionette.ItemView
   #
   # Does nothing if the timer is not valid.
   #
-  # @param [jQuery.Event] event the click event
-  #
-  playTimelet: (event) =>
-    if @model.get('running')
-      @stopTimelet()
-    else
-      @startTimelet()
+  playTimelet: ->
+    @model.pause()
 
   # Restarts the current timer.
   #
   # Starts the timer again only if it was running already.
   #
-  # @param [jQuery.Event] event the click event
-  #
-  restartTimelet: (event) =>
-    @model.set timer: @model.get('duration')
-    if @model.get('running')
-      @stopTimelet()
-      @startTimelet()
-    else
-      @stopTimelet()
+  restartTimelet: ->
+    @model.restart()
 
   # Starts the current timer.
   #
   startTimelet: ->
-    return unless @model.isValid()
-
-    @ui.clockTimer.removeAttr 'contentEditable'
-    @model.set running: true
-    @runner = setInterval @tick, 1000
+    @model.start()
 
   # Stops the current timer.
   #
   stopTimelet: ->
-    clearInterval @runner
-    delete @runner
-
-    @model.set running: false
-    @ui.clockTimer.attr 'contentEditable', 'true'
-
-  # Decrements the timer value by one.
-  #
-  tick: =>
-    @model.set timer: (@model.get('timer') - 1)
-    @stopTimelet() unless @model.isValid()
+    @model.stop()
 
   # Saves the timelet to the collection.
   #

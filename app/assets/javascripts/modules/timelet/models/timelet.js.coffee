@@ -1,7 +1,8 @@
-# A model for a timelet
+# Model for a Timelet
 #
 class Essence.Models.Timelet extends Backbone.Model
   localStorage: new Backbone.LocalStorage 'Timelets'
+
   defaults:
     name: 'New timelet'
     running: false
@@ -15,3 +16,55 @@ class Essence.Models.Timelet extends Backbone.Model
       return 'Invalid duration'
     unless parseInt(attrs.duration) > 0
       return 'Duration is too small'
+
+  # Checks if the timer is running.
+  #
+  # @return [Boolean] `true` if the timer is running, otherwise `false`
+  #
+  isRunning: -> @get 'running'
+
+  # Checks if the timer reached zero.
+  #
+  # @return [Boolean] `true` if the timer is finished, otherwise `false`
+  #
+  isFinished: -> @get 'timer' < 1
+
+  # Decrements the timer value by one until it reaches zero.
+  #
+  # @return [Boolean] `false` if the timer finished, otherwise `true`
+  #
+  tick: ->
+    @set timer: (@get('timer') - 1)
+    @stop() if @isFinished()
+
+  # Starts the timer.
+  #
+  start: ->
+    return unless @isValid()
+
+    @set running: true
+    @runner = setInterval @tick, 1000
+    true
+
+  # Stops the timer.
+  #
+  stop: ->
+    clearInterval @runner
+    delete @runner
+
+    @set running: false
+
+  # Pauses or starts the timer.
+  #
+  pause: ->
+    if @isRunning() then @stop() else @start()
+
+  # Restarts the timer.
+  #
+  restart: ->
+    @set timer: @model.get('duration')
+    if @isRunning()
+      @stop()
+      @start()
+    else
+      @stop()
