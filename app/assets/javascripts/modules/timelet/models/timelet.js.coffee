@@ -27,7 +27,7 @@ class Essence.Models.Timelet extends Backbone.Model
   #
   # @return [Boolean] `true` if the timer is finished, otherwise `false`
   #
-  isFinished: -> @get 'timer' < 1
+  isFinished: -> @get('timer') < 1
 
   # Decrements the timer value by one until it reaches zero.
   #
