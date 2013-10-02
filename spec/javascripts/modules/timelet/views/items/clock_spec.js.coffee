@@ -45,142 +45,33 @@ describe 'Essence.Views.Clock', ->
     it 'shows the clock', ->
       expect(@view.ui.clockTitle).toContainText 'Awesome timer'
 
-  describe '#playTimelet', ->
-    describe 'with a running clock', ->
-      beforeEach ->
-        @model.set running: true
-
-      it 'stops the clock', ->
-        spy = sinon.spy @view, 'stopTimelet'
-        @view.playTimelet()
-        expect(spy).toHaveBeenCalled()
-        spy.restore()
-
-    describe 'with a stopped clock', ->
-      beforeEach ->
-        @model.set running: false
-
-      it 'starts the clock', ->
-        spy = sinon.spy @view, 'startTimelet'
-        @view.playTimelet()
-        expect(spy).toHaveBeenCalled()
-        spy.restore()
+  describe '#pauseTimelet', ->
+    it 'delegates to the model', ->
+      stub = sinon.stub @model, 'pause'
+      @view.pauseTimelet()
+      expect(stub).toHaveBeenCalled()
+      stub.restore()
 
   describe '#startTimelet', ->
-
-    describe 'with a finished timelet', ->
-      beforeEach ->
-        @model.set timer: 0
-
-      it 'does nothing', ->
-        @view.startTimelet()
-        expect(@view.runner).toBeUndefined()
-
-    describe 'with an invalid timelet', ->
-      beforeEach ->
-        @model.set timer: 'abc'
-
-      it 'does nothing', ->
-        @view.startTimelet()
-        expect(@view.runner).toBeUndefined()
-
-    describe 'with a valid timelet', ->
-      it 'starts the timer', ->
-        @view.startTimelet()
-        expect(@view.runner).toBeDefined()
-
-      it 'prevents the timer from being edited', ->
-        @view.ui.clockTimer.attr 'contentEditable', 'true'
-        @view.startTimelet()
-        expect(@view.ui.clockTimer).not.toHaveAttr 'contentEditable'
+    it 'delegates to the model', ->
+      stub = sinon.stub @model, 'start'
+      @view.startTimelet()
+      expect(stub).toHaveBeenCalled()
+      stub.restore()
 
   describe '#restartTimelet', ->
-
-    describe 'with a finished timelet', ->
-      beforeEach ->
-        @model.set
-          timer: 0
-          running: false
-
-      it 'restores the timer', ->
-        expect(@view.model.get('timer')).toEqual 0
-        @view.restartTimelet()
-        expect(@view.model.get('timer')).toEqual 42
-
-      it 'does not start the timelet', ->
-        expect(@view.model.get('running')).toBeFalsy()
-        @view.restartTimelet()
-        expect(@view.model.get('running')).toBeFalsy()
-        expect(@view.runner).toBeUndefined()
-
-    describe 'with an invalid timelet', ->
-      beforeEach ->
-        @model.set duration: 'abc'
-
-      it 'restores the timer', ->
-        expect(@view.model.get('timer')).toEqual 10
-        @view.restartTimelet()
-        expect(@view.model.get('timer')).toEqual 'abc'
-
-      it 'does nothing', ->
-        @view.restartTimelet()
-        expect(@view.runner).toBeUndefined()
-
-    describe 'with a paused timelet', ->
-      beforeEach ->
-        @model.set running: false
-
-      it 'restores the timer', ->
-        expect(@view.model.get('timer')).toEqual 10
-        @view.restartTimelet()
-        expect(@view.model.get('timer')).toEqual 42
-
-      it 'does not start the timelet', ->
-        expect(@view.model.get('running')).toBeFalsy()
-        @view.restartTimelet()
-        expect(@view.model.get('running')).toBeFalsy()
-        expect(@view.runner).toBeUndefined()
-
-    describe 'with a running timelet', ->
-      beforeEach ->
-        @model.set running: true
-
-      it 'restores the timer', ->
-        expect(@view.model.get('timer')).toEqual 10
-        @view.restartTimelet()
-        expect(@view.model.get('timer')).toEqual 42
-
-      it 'does not stop the timelet', ->
-        expect(@view.model.get('running')).toBeTruthy()
-        @view.restartTimelet()
-        expect(@view.model.get('running')).toBeTruthy()
-        expect(@view.runner).toBeDefined()
+    it 'delegates to the model', ->
+      stub = sinon.stub @model, 'restart'
+      @view.restartTimelet()
+      expect(stub).toHaveBeenCalled()
+      stub.restore()
 
   describe '#stopTimelet', ->
-    it 'stops the countdown', ->
-      @view.runner = 123
+    it 'delegates to the model', ->
+      stub = sinon.stub @model, 'stop'
       @view.stopTimelet()
-      expect(@view.runner).toBeUndefined()
-
-    it 'allows the timer to be edited', ->
-      @view.ui.clockTimer.removeAttr 'contentEditable'
-      @view.stopTimelet()
-      expect(@view.ui.clockTimer).toHaveAttr 'contentEditable'
-
-  describe '#tick', ->
-    it 'decrements the timer of the timelet', ->
-      @model.set timer: 42
-      @view.tick()
-      expect(@model.get('timer')).toEqual 41
-
-    describe 'when the timer reached 0', ->
-      beforeEach ->
-        @model.set timer: 0
-
-      it 'stops the timelet', ->
-        spy = sinon.spy @view, 'stopTimelet'
-        @view.tick()
-        expect(spy).toHaveBeenCalled()
+      expect(stub).toHaveBeenCalled()
+      stub.restore()
 
   describe '#saveTimelet', ->
     describe 'with a new timelet', ->
@@ -277,3 +168,20 @@ describe 'Essence.Views.Clock', ->
       it 'removes the running class from the start button', ->
         @view.renderPlayButton()
         expect(@view.ui.timer).not.toHaveClass 'running'
+
+  describe '#toggleTimerEditability', ->
+    describe 'with a running clock', ->
+      beforeEach ->
+        @view.ui.clockTimer.attr 'contentEditable', 'true'
+
+      it 'prevents the timer from being edited', ->
+        @view.toggleTimerEditability @model, true
+        expect(@view.ui.clockTimer).not.toHaveAttr 'contentEditable'
+
+    describe 'with a stopped clock', ->
+      beforeEach ->
+        @view.ui.clockTimer.removeAttr 'contentEditable'
+
+      it 'allows the timer to be edited', ->
+        @view.toggleTimerEditability @model, false
+        expect(@view.ui.clockTimer).toHaveAttr 'contentEditable'
