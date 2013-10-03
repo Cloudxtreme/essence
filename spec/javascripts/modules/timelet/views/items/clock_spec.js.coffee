@@ -7,7 +7,7 @@ describe 'Essence.Views.Clock', ->
       timer: 10
     @model = @collection.at 0
 
-    @parent = new Essence.Views.TimeletsPanel
+    @parent = new Essence.Views.TimeletsPanel model: @model, collection: @collection
     @view = new Essence.Views.Clock model: @model, parent: @parent
     @html = @view.render().$el
 

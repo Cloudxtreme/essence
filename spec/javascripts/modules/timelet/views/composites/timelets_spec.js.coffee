@@ -6,7 +6,7 @@ describe 'Essence.Views.Timelets', ->
       running: true
       timer: 10
     @collection = new Essence.Collections.Timelets [@model]
-    @parent = new Essence.Views.TimeletsPanel
+    @parent = new Essence.Views.TimeletsPanel model: @model, collection: @collection
     @view = new Essence.Views.Timelets model: @model, collection: @collection, parent: @parent
     @html = @view.render().$el
 

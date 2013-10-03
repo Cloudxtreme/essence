@@ -110,12 +110,19 @@ describe 'Essence.Models.Timelet', ->
         duration: 79
         running: true
         loaded: false
+      @otherTimelet = new Essence.Models.Timelet
+      @model.collection = new Essence.Collections.Timelets [@otherTimelet, @model]
 
     it 'rewinds the timelet in case it was already running', ->
       @model.load()
       expect(@model.get('timer')).toEqual 79
       expect(@model.get('running')).toBeFalsy()
       expect(@model.get('loaded')).toBeTruthy()
+
+    it 'unloads all other timelets', ->
+      @model.load()
+      expect(@model.get('loaded')).toBeTruthy()
+      expect(@otherTimelet.get('loaded')).toBeFalsy()
 
   describe '#unload', ->
     beforeEach ->

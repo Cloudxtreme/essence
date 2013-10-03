@@ -33,6 +33,6 @@ describe 'Essence.Timelet', ->
         spy = sinon.spy Backbone, 'sync'
         @module.showTimelets 1
         expect(spy).toHaveBeenCalled()
-        expect(spy.args[0][0]).toEqual 'read'
-        expect(spy.args[0][1]).toBeAnInstanceOf Essence.Models.Timelet
+        expect(spy.args[1][0]).toEqual 'read'
+        expect(spy.args[1][1]).toBeAnInstanceOf Essence.Models.Timelet
         spy.restore()

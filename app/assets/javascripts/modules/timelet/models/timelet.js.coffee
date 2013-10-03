@@ -45,6 +45,7 @@ class Essence.Models.Timelet extends Backbone.Model
   # Loads a timer.
   #
   load: ->
+    @collection.unload()
     @set { timer: @get('duration'), running: false }, { silent: true }
     @set loaded: true
 

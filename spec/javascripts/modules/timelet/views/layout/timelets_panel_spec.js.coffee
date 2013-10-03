@@ -6,6 +6,8 @@ describe 'Essence.Views.TimeletsPanel', ->
       running: true
       timer: 10
     @collection = new Essence.Collections.Timelets [@model]
+    @model.collection = @collection
+
     @view = new Essence.Views.TimeletsPanel model: @model, collection: @collection
     @html = @view.render().$el
 
@@ -32,6 +34,14 @@ describe 'Essence.Views.TimeletsPanel', ->
     it 'creates a timelet on timelet create', ->
       @view.trigger 'timelet:create'
       expect(@view.model.get('name')).toEqual 'New timelet'
+
+    describe 'syncing the model', ->
+      it 'loads it in its collection', ->
+        expect(@model.isLoaded()).toBeFalsy()
+        expect(@collection.at(0).isLoaded()).toBeFalsy()
+        @model.trigger 'sync'
+        expect(@model.isLoaded()).toBeTruthy()
+        expect(@collection.at(0).isLoaded()).toBeTruthy()
 
   describe '#render', ->
     it 'shows the clock', ->

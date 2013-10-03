@@ -67,10 +67,9 @@ class Essence.Timelet
     collection = new Essence.Collections.Timelets
 
     model = new Essence.Models.Timelet {}, collection: collection
-    if id
-      model.set id: id
-      model.fetch()
-
-    collection.fetch()
+    model.set id: id if id
 
     @layout.timelets.show new Essence.Views.TimeletsPanel model: model, collection: collection
+
+    collection.fetch()
+    model.fetch() if id
