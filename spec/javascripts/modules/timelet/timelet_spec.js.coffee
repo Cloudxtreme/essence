@@ -28,11 +28,6 @@ describe 'Essence.Timelet', ->
       expect(spy.args[0][1]).toBeAnInstanceOf Essence.Collections.Timelets
       spy.restore()
 
-    describe 'with an ID', ->
-      it 'fetches the timelet with that ID', ->
-        spy = sinon.spy Backbone, 'sync'
-        @module.showTimelets 1
-        expect(spy).toHaveBeenCalled()
-        expect(spy.args[1][0]).toEqual 'read'
-        expect(spy.args[1][1]).toBeAnInstanceOf Essence.Models.Timelet
-        spy.restore()
+    it 'renders the layout', ->
+      @module.showTimelets()
+      expect(@module.layout.timelets.$el).toBe 'article.timelets'

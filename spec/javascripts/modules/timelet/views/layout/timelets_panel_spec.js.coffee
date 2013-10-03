@@ -35,13 +35,23 @@ describe 'Essence.Views.TimeletsPanel', ->
       @view.trigger 'timelet:create'
       expect(@view.model.get('name')).toEqual 'New timelet'
 
-    describe 'syncing the model', ->
-      it 'loads it in its collection', ->
-        expect(@model.isLoaded()).toBeFalsy()
-        expect(@collection.at(0).isLoaded()).toBeFalsy()
-        @model.trigger 'sync'
-        expect(@model.isLoaded()).toBeTruthy()
-        expect(@collection.at(0).isLoaded()).toBeTruthy()
+    describe 'fetching the collection', ->
+      describe 'with a model ID', ->
+        beforeEach ->
+          @view.model = new Essence.Models.Timelet { id: 123 }, collection: @collection
+
+        it 'loads the model as a timelet', ->
+          stub = sinon.stub @view, 'loadTimelet'
+          @model.trigger 'reset'
+          expect(stub).toHaveBeenCalledWith 123
+          stub.restore()
+
+      describe 'without a model ID', ->
+        it 'unloads all timelets', ->
+          stub = sinon.stub @collection, 'unload'
+          @model.trigger 'reset'
+          expect(stub).toHaveBeenCalled()
+          stub.restore()
 
   describe '#render', ->
     it 'shows the clock', ->

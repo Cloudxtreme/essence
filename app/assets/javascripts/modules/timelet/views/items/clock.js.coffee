@@ -49,6 +49,7 @@ class Essence.Views.Clock extends Backbone.Marionette.ItemView
     @model.collection.add @model, merge: true
     @model.save()
     @render()
+    Backbone.history.navigate "/timelet/#{ @model.id }"
 
   # Stores the name of the timelet
   #

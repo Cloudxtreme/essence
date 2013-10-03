@@ -16,25 +16,11 @@ class Essence.Views.TimeletsPanel extends Backbone.Marionette.Layout
     @on 'timelet:load', @loadTimelet
     @on 'timelet:create', @createTimelet
 
-    # FIXME
-    # This looks like a racing condition waiting to happen.
-    # If the @model syncs first, the @collection sync callback
-    # will override the loading of the @model.
-    #
-    # Solutions:
-    # * Use promises to sync the model after the collection.
-    # * Use promises to load the model when both the model and
-    #   the collection have been synced.
-    # * Don't fetch the model at all, but pick it from the
-    #   collection once it's synced.
-    #
-    @listenTo @collection, 'sync', =>
-      @collection.unload()
-
-    # A restored Timelet should be reflected in the collection.
-    #
-    @listenTo @model, 'sync', =>
-      @collection.get(@model)?.load()
+    @listenTo @collection, 'reset', =>
+      if @model.id
+        @loadTimelet @model.id
+      else
+        @collection.unload()
 
   onRender: ->
     @clock.show new Essence.Views.Clock model: @model, parent: @

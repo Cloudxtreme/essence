@@ -100,6 +100,10 @@ describe 'Essence.Views.Clock', ->
       expect(spy).toHaveBeenCalled()
       spy.restore()
 
+    it 'navigates to the new model', ->
+      @view.saveTimelet()
+      expect(@navigation).toHaveBeenCalledWith "/timelet/#{ @model.id }"
+
   describe '#updateName', ->
     beforeEach ->
       @view.model.set name: 'Nada'
