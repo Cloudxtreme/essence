@@ -49,12 +49,11 @@ describe 'Essence.Views.TimeletsPanel', ->
       expect(spy).toHaveBeenCalled()
       spy.restore()
 
-    it 'rewinds the timelet in case it was already running', ->
-      expect(@model.get('timer')).toEqual 10
-      expect(@model.get('running')).toBeTruthy()
+    it 'loads the timelet', ->
+      stub = sinon.stub @model, 'load'
       @view.loadTimelet @model
-      expect(@model.get('timer')).toEqual 42
-      expect(@model.get('running')).toBeFalsy()
+      expect(stub).toHaveBeenCalled()
+      stub.restore()
 
     it 'loads the timelets attributes into the clock', ->
       expect(@model.get('name')).toEqual 'Awesome timer'

@@ -9,6 +9,12 @@ describe 'Essence.Views.Timelet', ->
 
     setFixtures @html
 
+  describe '#initialize', ->
+    it 'renders the timelet on model change', ->
+      expect(@html).not.toContain '.loaded'
+      @model.set loaded: true
+      expect(@html).toContain '.loaded'
+
   describe '#render', ->
     it 'renders the model', ->
       expect(@html).toContain '.name:contains(My test Timelet)'
@@ -36,3 +42,11 @@ describe 'Essence.Views.Timelet', ->
     it 'navigates to route for the this timelet', ->
       @view.load()
       expect(@navigation).toHaveBeenCalledWith "/timelet/#{ @model.id }"
+
+    describe 'when the timelet is already loaded', ->
+      beforeEach ->
+        @model.set loaded: true
+
+      it 'does nothing', ->
+        @view.load()
+        expect(@navigation).not.toHaveBeenCalled()

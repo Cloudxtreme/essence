@@ -16,3 +16,12 @@ describe 'Essence.Collections.Timelets', ->
       @collection.fetch()
       expect(spy).toHaveBeenCalled()
       spy.restore()
+
+  describe '#unload', ->
+    it 'unloads each model in the collection', ->
+      modelA = new Essence.Models.Timelet loaded: false
+      modelB = new Essence.Models.Timelet loaded: false
+      @collection.add [modelA, modelB]
+      @collection.unload()
+      expect(modelA.isLoaded()).toBeFalsy()
+      expect(modelB.isLoaded()).toBeFalsy()

@@ -28,12 +28,7 @@ class Essence.Views.TimeletsPanel extends Backbone.Marionette.Layout
     @clock.currentView.stopTimelet()
     @model = @collection.get id
 
-    # FIXME this should be refactored as a model method.
-    @model.set
-      timer: @model.get('duration')
-      running: false
-    ,
-      silent: true
+    @model.load()
 
     @clock.show new Essence.Views.Clock model: @model, parent: @
 

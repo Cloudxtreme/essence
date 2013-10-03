@@ -73,6 +73,21 @@ describe 'Essence.Models.Timelet', ->
       it 'returns true', ->
         expect(@model.isFinished()).toBeTruthy()
 
+  describe '#isLoaded', ->
+    describe 'with a loaded timelet', ->
+      beforeEach ->
+        @model.set loaded: true
+
+      it 'returns true', ->
+        expect(@model.isLoaded()).toBeTruthy()
+
+    describe 'with an unloaded timelet', ->
+      beforeEach ->
+        @model.set loaded: false
+
+      it 'returns true', ->
+        expect(@model.isLoaded()).toBeFalsy()
+
   describe '#tick', ->
     it 'decrements the timer', ->
       @model.set timer: 42
@@ -88,6 +103,28 @@ describe 'Essence.Models.Timelet', ->
         @model.tick()
         expect(spy).toHaveBeenCalled()
 
+  describe '#load', ->
+    beforeEach ->
+      @model.set
+        timer: 40
+        duration: 79
+        running: true
+        loaded: false
+
+    it 'rewinds the timelet in case it was already running', ->
+      @model.load()
+      expect(@model.get('timer')).toEqual 79
+      expect(@model.get('running')).toBeFalsy()
+      expect(@model.get('loaded')).toBeTruthy()
+
+  describe '#unload', ->
+    beforeEach ->
+      @model.set loaded: true
+
+    it 'marks the timelet as not loaded', ->
+      @model.unload()
+      expect(@model.get('loaded')).toBeFalsy()
+        
   describe '#start', ->
     beforeEach ->
       @model.set

@@ -4,6 +4,7 @@ class Essence.Models.Timelet extends Backbone.Model
   localStorage: new Backbone.LocalStorage 'Timelets'
 
   defaults:
+    loaded: false
     name: 'New timelet'
     running: false
     duration: 0
@@ -29,11 +30,27 @@ class Essence.Models.Timelet extends Backbone.Model
   #
   isFinished: -> @get('timer') < 1
 
+  # Checks if the timelet loaded.
+  #
+  # @return [Boolean] `true` if the timelet is loaded, otherwise `false`
+  #
+  isLoaded: -> @get('loaded')
+
   # Decrements the timer value by one until it reaches zero.
   #
   tick: =>
     @set timer: (@get('timer') - 1)
     @stop() if @isFinished()
+
+  # Loads a timer.
+  #
+  load: ->
+    @set { timer: @get('duration'), running: false }, { silent: true }
+    @set loaded: true
+
+  # Marks the timelet as not loaded.
+  #
+  unload: -> @set loaded: false
 
   # Starts the timer.
   #
