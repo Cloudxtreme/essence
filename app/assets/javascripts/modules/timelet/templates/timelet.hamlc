@@ -1,9 +1,16 @@
 %h3
   %span.button.icon.load{ class: 'loaded' if @loaded }
-  %span.label= "#{ @name } (#{ @duration }s)"
+  %span.label= @name
 
 .details.hidden
-  %label.loop
-    %input{ type: 'checkbox' }
-    loop
-  %span.button.icon.delete
+  .duration
+    %label
+      Duration:
+      %span.editable{ contentEditable: 'true' }= @duration
+      %span s
+  .loop
+    %label{ title: 'Played this timlet in an endless loop' }
+      %input{ type: 'checkbox' }
+      loop
+  .delete
+    %span.button.icon.delete{ title: 'Delete this timelet' }

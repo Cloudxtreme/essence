@@ -7,5 +7,5 @@
   %span.editable.time{ contentEditable: 'true' }= @timer
 
 .controls
-  %span.button.icon.play
-  %span.button.icon.reset
+  %span.button.icon.play{ title: 'Play timelet' }
+  %span.button.icon.reset{ title: 'Restart timelet' }
