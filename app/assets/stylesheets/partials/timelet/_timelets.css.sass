@@ -14,9 +14,20 @@
     text-align: center
 
     .title
-      span
-        display: inline-block
+      h2
+        max-width: 100%
+        white-space: nowrap
         min-height: 1em
+
+      span
+        line-height: 1em
+
+      .name
+        display: inline-block
+        min-width: 7ex
+        max-width: 80%
+        text-overflow: ellipsis
+        overflow: hidden
 
       .save
         display: none
@@ -80,3 +91,10 @@
 
       .delete:after
         content: '\F00D'
+
+      li
+        max-width: 100%
+
+        white-space: nowrap
+        overflow: hidden
+        text-overflow: ellipsis
