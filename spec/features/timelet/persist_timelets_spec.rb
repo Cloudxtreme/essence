@@ -12,15 +12,15 @@ feature 'Creating timelets' do
     create_clock_timelet 'My second timelet', 30
 
     within 'section.timelets' do
-      page.should have_content 'My first timelet (15s)'
-      page.should have_content 'My second timelet (30s)'
+      page.should have_content 'My first timelet'
+      page.should have_content 'My second timelet'
     end
 
     visit '/timelet'
 
     within 'section.timelets' do
-      page.should have_content 'My first timelet (15s)'
-      page.should have_content 'My second timelet (30s)'
+      page.should have_content 'My first timelet'
+      page.should have_content 'My second timelet'
     end
   end
 
@@ -30,8 +30,8 @@ feature 'Creating timelets' do
     create_clock_timelet 'My second timelet', 30
 
     within 'section.timelets' do
-      page.should have_content 'My first timelet (15s)'
-      page.should have_content 'My second timelet (30s)'
+      page.should have_content 'My first timelet'
+      page.should have_content 'My second timelet'
     end
 
     within 'section.timelets' do
@@ -40,8 +40,8 @@ feature 'Creating timelets' do
     first_timelet_path = current_path
 
     within 'section.timelets' do
-      page.should have_content 'My first timelet (15s)'
-      page.should have_content 'My second timelet (30s)'
+      page.should have_content 'My first timelet'
+      page.should have_content 'My second timelet'
     end
 
     within 'section.timelets' do
@@ -56,8 +56,8 @@ feature 'Creating timelets' do
     end
 
     within 'section.timelets' do
-      page.should have_content 'My first timelet (15s)'
-      page.should have_content 'My second timelet (30s)'
+      page.should have_content 'My first timelet'
+      page.should have_content 'My second timelet'
     end
 
     visit second_timelet_path
@@ -67,8 +67,8 @@ feature 'Creating timelets' do
     end
 
     within 'section.timelets' do
-      page.should have_content 'My first timelet (15s)'
-      page.should have_content 'My second timelet (30s)'
+      page.should have_content 'My first timelet'
+      page.should have_content 'My second timelet'
     end
   end
 
