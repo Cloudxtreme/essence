@@ -26,7 +26,8 @@
           overflow: hidden
           text-overflow: ellipsis
 
-          cursor: pointer
+          .label
+            cursor: text
 
         .details
           padding: 1em 0
@@ -44,3 +45,6 @@
 
           .delete, .close, .save
             float: right
+
+          .validation-error
+            color: $blue-gray

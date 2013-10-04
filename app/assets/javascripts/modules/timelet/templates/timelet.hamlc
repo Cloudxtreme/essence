@@ -1,16 +1,17 @@
-%h3.label
+%h3
   %span.button.icon.load{ class: 'loaded' if @loaded }
-  %span= @name
+  %span.editable.name{ contentEditable: 'true', data: { attribute: 'name' } }= @name
 
 .details.hidden
   .duration
     %label
       Duration:
-      %span.editable{ contentEditable: 'true' }= @duration
+      %span.editable{ contentEditable: 'true', data: { attribute: 'duration' } }= @duration
       %span s
   .loop
-    %label{ title: 'Played this timlet in an endless loop' }
+    %label{ title: 'Play this timlet in an endless loop' }
       %input{ type: 'checkbox' }
       loop
   .button.icon.close{ title: 'Close' }
   .button.icon.delete{ title: 'Delete this timelet' }
+  .button.icon.hidden.save{ title: 'Save' }

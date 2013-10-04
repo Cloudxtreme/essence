@@ -12,11 +12,11 @@ class Essence.Models.Timelet extends Backbone.Model
 
   validate: (attrs, options) ->
     unless parseInt(attrs.timer) > 0
-      return 'Timer is too small'
+      return { timer: 'too small' }
     unless parseInt(attrs.duration)
-      return 'Invalid duration'
+      return { duration: 'invalid' }
     unless parseInt(attrs.duration) > 0
-      return 'Duration is too small'
+      return { duration: 'too small' }
 
   # Checks if the timer is running.
   #
@@ -84,3 +84,9 @@ class Essence.Models.Timelet extends Backbone.Model
       @start()
     else
       @stop()
+
+  # TODO refactor this into an Essence.Model
+  #
+  setStrict: (attribute, value) ->
+    value = parseInt(value) if typeof @defaults[attribute] is 'number'
+    @set attribute, value
