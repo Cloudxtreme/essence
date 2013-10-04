@@ -8,9 +8,10 @@ class Essence.Views.Timelet extends Backbone.Marionette.ItemView
     details: '.details'
 
   events:
-    'click .delete': 'delete'
-    'click .load':   'load'
-    'click .label':  'open'
+    'click .delete' : 'delete'
+    'click .load'   : 'load'
+    'click .label'  : 'open'
+    'click .close'  : 'close'
 
   initialize: ->
     @listenTo @model, 'change:loaded', @render

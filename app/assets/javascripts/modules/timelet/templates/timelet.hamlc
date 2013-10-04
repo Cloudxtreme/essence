@@ -12,5 +12,5 @@
     %label{ title: 'Played this timlet in an endless loop' }
       %input{ type: 'checkbox' }
       loop
-  .delete
-    %span.button.icon.delete{ title: 'Delete this timelet' }
+  .button.icon.close{ title: 'Close' }
+  .button.icon.delete{ title: 'Delete this timelet' }
