@@ -6,6 +6,9 @@ env:
   global:
     - RAILS_ENV=test
     - JS_DRIVER=phantomjs
+branches:
+  only:
+    - master
 script: 'rake suite'
 notifications:
   recipients:
