@@ -1,6 +1,6 @@
-%h3
+%h3.label
   %span.button.icon.load{ class: 'loaded' if @loaded }
-  %span.label= @name
+  %span= @name
 
 .details.hidden
   .duration
