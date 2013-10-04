@@ -37,9 +37,9 @@ describe 'Essence.Views.Clock', ->
 
     it 'renders the button on status change', ->
       @model.set running: false
-      expect(@view.ui.timer).not.toHaveClass 'running'
+      expect(@view.$el).not.toHaveClass 'running'
       @model.set running: true
-      expect(@view.ui.timer).toHaveClass 'running'
+      expect(@view.$el).toHaveClass 'running'
 
   describe '#render', ->
     it 'shows the clock', ->
@@ -158,20 +158,20 @@ describe 'Essence.Views.Clock', ->
     describe 'with a running clock', ->
       beforeEach ->
         @view.model.set running: true
-        @view.ui.timer.removeClass 'running'
+        @view.$el.removeClass 'running'
 
       it 'sets the running class to the start button', ->
         @view.renderPlayButton()
-        expect(@view.ui.timer).toHaveClass 'running'
+        expect(@view.$el).toHaveClass 'running'
 
     describe 'with a stopped clock', ->
       beforeEach ->
         @view.model.set running: false
-        @view.ui.timer.addClass 'running'
+        @view.$el.addClass 'running'
 
       it 'removes the running class from the start button', ->
         @view.renderPlayButton()
-        expect(@view.ui.timer).not.toHaveClass 'running'
+        expect(@view.$el).not.toHaveClass 'running'
 
   describe '#toggleTimerEditability', ->
     describe 'with a running clock', ->
