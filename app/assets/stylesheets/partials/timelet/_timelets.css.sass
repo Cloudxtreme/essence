@@ -1,16 +1,19 @@
 #container > .timelet > article.timelets
 
-  section.clock
-    width: 100%
-    float: left
-    clear: both
+  &> div > section
+    width: 50%
 
-    padding-bottom: 20px
+    &> div
+      margin: 2em 1em
+
+  section.clock
+    float: left
+    text-align: center
 
     .title
-      display: inline-block
-      height: 2em
-      padding: 20px 0
+      span
+        display: inline-block
+        min-height: 1em
 
       .save
         display: none
@@ -18,15 +21,25 @@
           content: '\F0C7'
 
     .timer
-      font-size: 50px
-      vertical-align: bottom
-
       .time
-        padding: 10px
-        border-radius: 10px
+        display: inline-block
+
+        min-width: 2ex
+        padding: 0.3em
+
+        border-radius: 0.3em
         outline: none
         background-color: $dark-blue
+        box-shadow: 0 0 0.2em $dark-blue
+
+        border-bottom: none
+
+        font-size: 4em
         font-family: monospace
+
+    .controls
+      font-size: 2em
+      padding: 0.5em 0
 
       .play
         &:after
@@ -46,11 +59,11 @@
         box-shadow: inset 0 0 0.1em $white-shade
 
   section.timelets
-    width: 100%
     float: left
 
     ul
       list-style: none
+      padding-left: 1em
 
       .load:after
         content: '\F01D'
