@@ -4,6 +4,8 @@
     %span.button.icon.save{ title: 'save this timelet' }
 
 .timer
+  %span.editable.time{ contentEditable: 'true' }= @timer
+
+.controls
   %span.button.icon.play
   %span.button.icon.reset
-  %span.time{ contentEditable: 'true' }= @timer
