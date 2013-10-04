@@ -1,4 +1,9 @@
-%span.button.icon.load{ class: 'loaded' if @loaded }
-%span.name= @name
-%span.duration= "(#{ @duration }s)"
-%span.button.icon.delete
+%h3
+  %span.button.icon.load{ class: 'loaded' if @loaded }
+  %span.label= "#{ @name } (#{ @duration }s)"
+
+.details.hidden
+  %label.loop
+    %input{ type: 'checkbox' }
+    loop
+  %span.button.icon.delete
