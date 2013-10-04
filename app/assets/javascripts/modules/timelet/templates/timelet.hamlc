@@ -1,5 +1,4 @@
-%section.timelet
-  %span.button.icon.load{ class: 'loaded' if @loaded }
-  %span.name= @name
-  %span.duration= "(#{ @duration }s)"
-  %span.button.icon.delete
+%span.button.icon.load{ class: 'loaded' if @loaded }
+%span.name= @name
+%span.duration= "(#{ @duration }s)"
+%span.button.icon.delete
