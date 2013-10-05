@@ -27,7 +27,7 @@ class Essence.Views.Timelets extends Backbone.Marionette.CompositeView
   # @param [jQuery.Event] event the click event
   #
   createTimelet: (event) =>
-    model = new Essence.Models.Timelet
+    model = new Essence.Models.Timelet name: 'New Timelet'
     model.state.expanded = true
     @collection.add model
     Backbone.history.navigate '/timelet'
