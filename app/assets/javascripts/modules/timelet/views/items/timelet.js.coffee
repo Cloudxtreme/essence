@@ -74,7 +74,7 @@ class Essence.Views.Timelet extends Backbone.Marionette.ItemView
   # Saves the timelet.
   #
   save: ->
-    @model.save
+    @model.save()
     @disableSaveButton()
 
   unmarkValidationErrors: ->
