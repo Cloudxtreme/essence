@@ -19,7 +19,6 @@ class Essence.Models.Timelet extends Essence.Model
       timer: 0
       running: false
       loaded: false
-      expanded: false
 
   # Checks if the timer is running.
   #

@@ -39,10 +39,10 @@ describe 'Essence.Views.Timelet', ->
       expect(@view.$el.find('[data-attribute=duration]')).toHaveClass 'validation-error'
 
     it 'collapses the Timelet when the collection is collapsed', ->
-      @model.state.expanded = true
-      expect(@model.state.expanded).toBeTruthy()
+      @view.expanded = true
+      expect(@view.expanded).toBeTruthy()
       @model.collection.trigger 'collapse'
-      expect(@model.state.expanded).toBeFalsy()
+      expect(@view.expanded).toBeFalsy()
 
   describe '#render', ->
     it 'renders the model', ->
@@ -133,13 +133,13 @@ describe 'Essence.Views.Timelet', ->
       spy.restore()
 
     it 'sets the expanded state', ->
-      expect(@model.state.expanded).toBeFalsy()
+      expect(@view.expanded).toBeFalsy()
       @view.expand()
-      expect(@model.state.expanded).toBeTruthy()
+      expect(@view.expanded).toBeTruthy()
 
     describe 'with an already expanded timelet', ->
       beforeEach ->
-        @model.state.expanded = true
+        @view.expanded = true
 
       it 'does nothing', ->
         spy = sinon.spy @collection, 'trigger'
@@ -149,7 +149,7 @@ describe 'Essence.Views.Timelet', ->
 
   describe '#collapse', ->
     beforeEach ->
-      @model.state.expanded = true
+      @view.expanded = true
 
     it 'hides the details', ->
       @view.ui.details.show()
@@ -164,14 +164,14 @@ describe 'Essence.Views.Timelet', ->
       spy.restore()
 
     it 'sets the expanded state', ->
-      @model.state.expanded = true
-      expect(@model.state.expanded).toBeTruthy()
+      @view.expanded = true
+      expect(@view.expanded).toBeTruthy()
       @view.collapse()
-      expect(@model.state.expanded).toBeFalsy()
+      expect(@view.expanded).toBeFalsy()
 
     describe 'with an already collapsed Timelet', ->
       beforeEach ->
-        @model.state.expanded = false
+        @view.expanded = false
 
       it 'does nothing', ->
         spy = sinon.spy @view, 'toggleNameEditability'
@@ -281,7 +281,7 @@ describe 'Essence.Views.Timelet', ->
       beforeEach ->
         @view.ui.name.addClass 'editing'
         @view.ui.name.attr 'contentEditable', 'true'
-        @model.state.expanded = false
+        @view.expanded = false
         @view.toggleNameEditability()
 
       it 'prevents the timelet from being edited', ->
@@ -293,7 +293,7 @@ describe 'Essence.Views.Timelet', ->
     describe 'with an expanded timelet', ->
       beforeEach ->
         @view.ui.name.removeAttr 'contentEditable'
-        @model.state.expanded = true
+        @view.expanded = true
         @view.toggleNameEditability()
 
       it 'allows the timer to be edited', ->

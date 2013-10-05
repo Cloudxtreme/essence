@@ -46,9 +46,9 @@ class Essence.Views.Timelet extends Backbone.Marionette.ItemView
   # Shows or hides details of the timelet.
   #
   expand: ->
-    return if @model.state.expanded
+    return if @expanded
     @model.collection.trigger 'collapse'
-    @model.state.expanded = true
+    @expanded = true
     @ui.details.slideDown()
 
     @toggleNameEditability()
@@ -56,8 +56,8 @@ class Essence.Views.Timelet extends Backbone.Marionette.ItemView
   # Hides details of the timelet.
   #
   collapse: ->
-    return unless @model.state.expanded
-    @model.state.expanded = false
+    return unless @expanded
+    @expanded = false
     @ui.details.slideUp()
 
     @toggleNameEditability()
@@ -111,7 +111,7 @@ class Essence.Views.Timelet extends Backbone.Marionette.ItemView
   # Allow the name field to be edited if the details are expanded.
   #
   toggleNameEditability: =>
-    if @model.state.expanded
+    if @expanded
       @ui.name.attr 'contentEditable', 'true'
       @ui.name.addClass 'editing'
     else
