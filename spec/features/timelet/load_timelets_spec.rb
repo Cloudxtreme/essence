@@ -7,13 +7,14 @@ feature 'Creating timelets' do
   end
 
   scenario 'loading an existing timelet' do
-    create_clock_timelet 'My first timelet', 15
-    find('.add').click
-    create_clock_timelet 'My second timelet', 30
+    create_timelet 'My first timelet', 15
+    create_timelet 'My second timelet', 30
 
     within 'section.timelets' do
       page.should have_content 'My first timelet'
       page.should have_content 'My second timelet'
+
+      find('h3', text: 'My second timelet').find('.load').click
     end
 
     within 'section.clock' do
@@ -21,7 +22,7 @@ feature 'Creating timelets' do
     end
 
     within 'section.timelets' do
-      first('.load').click
+      find('h3', text: 'My first timelet').find('.load').click
     end
 
     within 'section.clock' do
