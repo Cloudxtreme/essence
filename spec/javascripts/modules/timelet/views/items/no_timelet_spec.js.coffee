@@ -7,4 +7,4 @@ describe 'Essence.Views.NoTimelet', ->
 
   describe '#render', ->
     it 'renders the no-timlets-found message', ->
-      expect(@html).toHaveText "You didn't save any timelets yet."
+      expect(@html).toContainText "You didn't create any timelets yet."
