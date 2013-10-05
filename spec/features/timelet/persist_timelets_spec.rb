@@ -7,9 +7,8 @@ feature 'Creating timelets' do
   end
 
   scenario 'storing timelets in localStorage' do
-    create_clock_timelet 'My first timelet', 15
-    find('.add').click
-    create_clock_timelet 'My second timelet', 30
+    create_timelet 'My first timelet', 15
+    create_timelet 'My second timelet', 30
 
     within 'section.timelets' do
       page.should have_content 'My first timelet'
@@ -25,9 +24,8 @@ feature 'Creating timelets' do
   end
 
   scenario 'loading timelets from localStorage' do
-    create_clock_timelet 'My first timelet', 15
-    find('.add').click
-    create_clock_timelet 'My second timelet', 30
+    create_timelet 'My first timelet', 15
+    create_timelet 'My second timelet', 30
 
     within 'section.timelets' do
       page.should have_content 'My first timelet'

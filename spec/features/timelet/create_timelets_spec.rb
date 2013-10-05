@@ -6,16 +6,22 @@ feature 'Creating timelets' do
     visit '/timelet'
   end
 
-  scenario 'creating two timelets with the clock' do
-    create_clock_timelet 'My first timelet', 15
+  scenario 'creating a timelet' do
+    create_timelet 'A single timelet', 91
+
+    within 'section.timelets' do
+      page.should have_content 'A single timelet'
+    end
+  end
+
+  scenario 'creating two timelets' do
+    create_timelet 'My first timelet', 15
 
     within 'section.timelets' do
       page.should have_content 'My first timelet'
     end
 
-    find('.add').click
-
-    create_clock_timelet 'My second timelet', 30
+    create_timelet 'My second timelet', 30
 
     within 'section.timelets' do
       page.should have_content 'My first timelet'

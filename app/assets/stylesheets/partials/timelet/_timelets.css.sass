@@ -3,75 +3,11 @@
   section
     width: 50%
 
-    @media screen and (max-width: $tablet-size)
+    @media screen and (max-width: $desktop-size)
       width: 100%
 
     &> div
       margin: 2em 1em
-
-  section.clock
-    float: left
-    text-align: center
-
-    .title
-      h2
-        max-width: 100%
-        white-space: nowrap
-        min-height: 1em
-
-      span
-        line-height: 1em
-
-      .name
-        display: inline-block
-        min-width: 7ex
-        max-width: 80%
-        text-overflow: ellipsis
-        overflow: hidden
-
-      .save
-        display: none
-        &:after
-          content: '\F0C7'
-
-    .timer
-      .time
-        display: inline-block
-
-        min-width: 2ex
-        padding: 0.3em
-
-        border-radius: 0.1em
-        outline: none
-        background-color: $dark-blue
-
-        border-bottom: none
-
-        font-size: 4em
-        font-family: monospace
-        font-weight: bold
-
-    .controls
-      font-size: 2em
-      padding: 0.5em 0
-
-      .play
-        &:after
-          content: '\F04B'
-
-      .reset
-        &:after
-          content: '\F048'
-
-    .running
-      .controls
-        .play
-          &:after
-            content: '\F04C'
-
-      .timer .time
-        box-shadow: 0 0 0.3em $dark-blue
-        text-shadow: $light-yellow 0 0 0.1em
 
   section.timelets
     float: left
@@ -80,21 +16,40 @@
       list-style: none
       padding-left: 1em
 
-      .load:after
-        content: '\F01D'
-
-      .loaded:after
-        content: '\F144'
-
-      .add:after
-        content: '\F067'
-
-      .delete:after
-        content: '\F00D'
-
       li
-        max-width: 100%
+        h3
+          max-width: 100%
 
-        white-space: nowrap
-        overflow: hidden
-        text-overflow: ellipsis
+          margin: 0.2em
+
+          white-space: nowrap
+          overflow: hidden
+          text-overflow: ellipsis
+
+          .label
+            cursor: text
+
+        .details
+          padding: 1em 0
+          overflow: auto
+
+          background-color: $dark-blue
+          box-shadow: 0 0 0.3em $dark-blue
+          border-radius: 4px
+
+          &>div
+            padding: 0 1em
+
+          .duration, .loop
+            float: left
+
+          .delete, .close, .save
+            float: right
+
+          .validation-error
+            color: $blue-gray
+
+      .loaded
+        .load
+          &:after
+            content: '\F144'

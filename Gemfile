@@ -31,6 +31,7 @@ group :test, :development do
   gem 'debugger'
   gem 'guard-jasmine', require: false
   gem 'jasminerice'  , :git => 'https://github.com/bradphelan/jasminerice.git'
+  gem 'launchy'
   gem 'pry'          , require: false
   gem 'pry-coolline' , require: false
   gem 'pry-rails'

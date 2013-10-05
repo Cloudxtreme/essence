@@ -6,6 +6,12 @@ describe 'Essence.Models.Timelet', ->
     it 'creates a Backbone model', ->
       expect(@model).toBeAnInstanceOf Backbone.Model
 
+  describe '#initialize', ->
+    it 'defines the default state of a Timelet', ->
+      expect(@model.state.timer).toEqual 0
+      expect(@model.state.running).toBeFalsy()
+      expect(@model.state.loaded).toBeFalsy()
+
   describe '#fetch', ->
     it 'loads the model from localStorage', ->
       spy = sinon.spy Backbone, 'localSync'
@@ -16,44 +22,31 @@ describe 'Essence.Models.Timelet', ->
 
   describe '#validate', ->
     it 'succeeds with valid attributes', ->
-      @model.set timer: 23, duration: 40
+      @model.set duration: 40
       expect(@model.isValid()).toBeTruthy()
 
     it 'fails without a duration', ->
-      @model.set timer: 23
-      expect(@model.isValid()).toBeFalsy()
-
-    it 'fails without a timer', ->
-      @model.set duration: 23
-      expect(@model.isValid()).toBeFalsy()
-
-    it 'fails with an invalid timer', ->
-      @model.set timer: 'abc', duration: 23
       expect(@model.isValid()).toBeFalsy()
 
     it 'fails with an invalid duration', ->
-      @model.set timer: 23, duration: 'abc'
+      @model.set duration: 'abc'
       expect(@model.isValid()).toBeFalsy()
 
     it 'fails with a too small duration', ->
-      @model.set timer: 23, duration: 0
-      expect(@model.isValid()).toBeFalsy()
-
-    it 'fails with a timer that ran out', ->
-      @model.set timer: 0, duration: 40
+      @model.set duration: 0
       expect(@model.isValid()).toBeFalsy()
 
   describe '#isRunning', ->
     describe 'with a running timer', ->
       beforeEach ->
-        @model.set running: true
+        @model.state.running = true
 
       it 'returns true', ->
         expect(@model.isRunning()).toBeTruthy()
 
     describe 'with a stopped timer', ->
       beforeEach ->
-        @model.set running: false
+        @model.state.running = false
 
       it 'returns true', ->
         expect(@model.isRunning()).toBeFalsy()
@@ -61,14 +54,14 @@ describe 'Essence.Models.Timelet', ->
   describe '#isFinished', ->
     describe 'with an unfinished timer', ->
       beforeEach ->
-        @model.set timer: 1
+        @model.state.timer = 1
 
       it 'returns true', ->
         expect(@model.isFinished()).toBeFalsy()
 
     describe 'with timer that ran out', ->
       beforeEach ->
-        @model.set timer: 0
+        @model.state.timer = 0
 
       it 'returns true', ->
         expect(@model.isFinished()).toBeTruthy()
@@ -76,27 +69,33 @@ describe 'Essence.Models.Timelet', ->
   describe '#isLoaded', ->
     describe 'with a loaded timelet', ->
       beforeEach ->
-        @model.set loaded: true
+        @model.state.loaded = true
 
       it 'returns true', ->
         expect(@model.isLoaded()).toBeTruthy()
 
     describe 'with an unloaded timelet', ->
       beforeEach ->
-        @model.set loaded: false
+        @model.state.loaded = false
 
       it 'returns true', ->
         expect(@model.isLoaded()).toBeFalsy()
 
   describe '#tick', ->
     it 'decrements the timer', ->
-      @model.set timer: 42
+      @model.state.timer = 42
       @model.tick()
-      expect(@model.get('timer')).toEqual 41
+      expect(@model.state.timer).toEqual 41
+
+    it 'triggers the tick event', ->
+      spy = sinon.spy @model, 'trigger'
+      @model.tick()
+      expect(spy).toHaveBeenCalledWith 'tick'
+      spy.restore()
 
     describe 'when the timer reached 0', ->
       beforeEach ->
-        @model.set timer: 0
+        @model.state.timer = 0
 
       it 'stops the timelet', ->
         spy = sinon.spy @model, 'stop'
@@ -105,51 +104,53 @@ describe 'Essence.Models.Timelet', ->
 
   describe '#load', ->
     beforeEach ->
-      @model.set
-        timer: 40
-        duration: 79
-        running: true
-        loaded: false
+      @model.set duration: 79
+      @model.state.timer = 40
+      @model.state.running = false
+      @model.state.loaded = false
       @otherTimelet = new Essence.Models.Timelet
       @model.collection = new Essence.Collections.Timelets [@otherTimelet, @model]
 
     it 'rewinds the timelet in case it was already running', ->
       @model.load()
-      expect(@model.get('timer')).toEqual 79
-      expect(@model.get('running')).toBeFalsy()
-      expect(@model.get('loaded')).toBeTruthy()
+      expect(@model.state.timer).toEqual 79
+      expect(@model.isRunning()).toBeFalsy()
+      expect(@model.isLoaded()).toBeTruthy()
 
     it 'unloads all other timelets', ->
       @model.load()
-      expect(@model.get('loaded')).toBeTruthy()
-      expect(@otherTimelet.get('loaded')).toBeFalsy()
+      expect(@model.isLoaded()).toBeTruthy()
+      expect(@otherTimelet.isLoaded()).toBeFalsy()
+
+    it 'triggers the load event', ->
+      spy = sinon.spy @model, 'trigger'
+      @model.load()
+      expect(spy).toHaveBeenCalledWith 'loaded'
+      spy.restore()
 
   describe '#unload', ->
     beforeEach ->
-      @model.set loaded: true
+      @model.state.loaded = true
 
     it 'marks the timelet as not loaded', ->
       @model.unload()
-      expect(@model.get('loaded')).toBeFalsy()
+      expect(@model.isLoaded()).toBeFalsy()
+
+    it 'triggers the unload event', ->
+      spy = sinon.spy @model, 'trigger'
+      @model.unload()
+      expect(spy).toHaveBeenCalledWith 'unloaded'
+      spy.restore()
         
   describe '#start', ->
     beforeEach ->
-      @model.set
-        timer: 10
-        duration: 30
-        running: false
+      @model.set duration: 30
+      @model.state.running = false
+      @model.state.timer = 10
 
     describe 'with a finished timer', ->
       beforeEach ->
-        @model.set timer: 0
-
-      it 'does nothing', ->
-        @model.start()
-        expect(@model.runner).toBeUndefined()
-
-    describe 'with an invalid timer', ->
-      beforeEach ->
-        @model.set timer: 'abc'
+        @model.state.timer = 0
 
       it 'does nothing', ->
         @model.start()
@@ -157,7 +158,7 @@ describe 'Essence.Models.Timelet', ->
 
     describe 'with a running timer', ->
       beforeEach ->
-        @model.set running: true
+        @model.state.running = true
 
       it 'does nothing', ->
         @model.start()
@@ -168,16 +169,39 @@ describe 'Essence.Models.Timelet', ->
         @model.start()
         expect(@model.runner).toBeDefined()
 
+      it 'triggers the start event', ->
+        spy = sinon.spy @model, 'trigger'
+        @model.start()
+        expect(spy).toHaveBeenCalledWith 'start'
+        spy.restore()
+
+      it 'sets the running state', ->
+        @model.start()
+        expect(@model.isRunning()).toBeTruthy()
+
   describe '#stop', ->
+    beforeEach ->
+      @model.state.running = true
+
     it 'stops the countdown', ->
       @model.runner = 123
       @model.stop()
       expect(@model.runner).toBeUndefined()
 
+    it 'triggers the stop event', ->
+      spy = sinon.spy @model, 'trigger'
+      @model.stop()
+      expect(spy).toHaveBeenCalledWith 'stop'
+      spy.restore()
+
+    it 'sets the running state', ->
+      @model.stop()
+      expect(@model.isRunning()).toBeFalsy()
+
   describe '#pause', ->
     describe 'when running', ->
       beforeEach ->
-        @model.set running: true
+        @model.state.running = true
 
       it 'stops the timer', ->
         spy = sinon.spy @model, 'stop'
@@ -187,7 +211,7 @@ describe 'Essence.Models.Timelet', ->
 
     describe 'when stopped', ->
       beforeEach ->
-        @model.set running: false
+        @model.state.running = false
 
       it 'starts the timer', ->
         spy = sinon.spy @model, 'start'
@@ -198,32 +222,30 @@ describe 'Essence.Models.Timelet', ->
   describe '#restart', ->
     describe 'when finished', ->
       beforeEach ->
-        @model.set
-          timer: 0
-          running: false
-          duration: 32
+        @model.set duration: 32
+        @model.state.timer = 0
+        @model.state.running = false
 
       it 'restores the timer', ->
-        expect(@model.get('timer')).toEqual 0
+        expect(@model.state.timer).toEqual 0
         @model.restart()
-        expect(@model.get('timer')).toEqual 32
+        expect(@model.state.timer).toEqual 32
 
       it 'does not start the timer', ->
-        expect(@model.get('running')).toBeFalsy()
+        expect(@model.isRunning()).toBeFalsy()
         @model.restart()
-        expect(@model.get('running')).toBeFalsy()
+        expect(@model.isRunning()).toBeFalsy()
         expect(@model.runner).toBeUndefined()
 
     describe 'with an invalid duration', ->
       beforeEach ->
-        @model.set
-          duration: 'abc'
-          timer: 10
+        @model.set duration: 'abc'
+        @model.state.timer = 10
 
       it 'restores the timer', ->
-        expect(@model.get('timer')).toEqual 10
+        expect(@model.state.timer).toEqual 10
         @model.restart()
-        expect(@model.get('timer')).toEqual 'abc'
+        expect(@model.state.timer).toEqual 'abc'
 
       it 'does nothing', ->
         @model.restart()
@@ -231,36 +253,34 @@ describe 'Essence.Models.Timelet', ->
 
     describe 'when paused', ->
       beforeEach ->
-        @model.set
-          running: false
-          duration: 28
-          timer: 17
+        @model.set duration: 28
+        @model.state.timer = 17
+        @model.state.running = false
 
       it 'restores the timer', ->
-        expect(@model.get('timer')).toEqual 17
+        expect(@model.state.timer).toEqual 17
         @model.restart()
-        expect(@model.get('timer')).toEqual 28
+        expect(@model.state.timer).toEqual 28
 
       it 'does not start the timer', ->
-        expect(@model.get('running')).toBeFalsy()
+        expect(@model.isRunning()).toBeFalsy()
         @model.restart()
-        expect(@model.get('running')).toBeFalsy()
+        expect(@model.isRunning()).toBeFalsy()
         expect(@model.runner).toBeUndefined()
 
     describe 'when running', ->
       beforeEach ->
-        @model.set
-          running: true
-          duration: 67
-          timer: 13
+        @model.set duration: 67
+        @model.state.timer = 13
+        @model.state.running = true
 
       it 'restores the timer', ->
-        expect(@model.get('timer')).toEqual 13
+        expect(@model.state.timer).toEqual 13
         @model.restart()
-        expect(@model.get('timer')).toEqual 67
+        expect(@model.state.timer).toEqual 67
 
       it 'does not stop the timer', ->
-        expect(@model.get('running')).toBeTruthy()
+        expect(@model.isRunning()).toBeTruthy()
         @model.restart()
-        expect(@model.get('running')).toBeTruthy()
+        expect(@model.isRunning()).toBeTruthy()
         expect(@model.runner).toBeDefined()

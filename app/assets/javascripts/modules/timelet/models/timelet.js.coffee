@@ -1,66 +1,75 @@
 # Model for a Timelet
 #
-class Essence.Models.Timelet extends Backbone.Model
+class Essence.Models.Timelet extends Essence.Model
   localStorage: new Backbone.LocalStorage 'Timelets'
 
   defaults:
-    loaded: false
-    name: 'New timelet'
-    running: false
+    name: ''
     duration: 0
-    timer: '--'
 
   validate: (attrs, options) ->
-    unless parseInt(attrs.timer) > 0
-      return 'Timer is too small'
     unless parseInt(attrs.duration)
-      return 'Invalid duration'
+      return { duration: 'invalid' }
     unless parseInt(attrs.duration) > 0
-      return 'Duration is too small'
+      return { duration: 'too small' }
+
+  initialize: ->
+    # Define the non-persistant state of the Timelet.
+    @state =
+      timer: 0
+      running: false
+      loaded: false
 
   # Checks if the timer is running.
   #
   # @return [Boolean] `true` if the timer is running, otherwise `false`
   #
-  isRunning: -> @get 'running'
+  isRunning: -> @state.running
 
   # Checks if the timer reached zero.
   #
   # @return [Boolean] `true` if the timer is finished, otherwise `false`
   #
-  isFinished: -> @get('timer') < 1
+  isFinished: -> @state.timer < 1
 
   # Checks if the timelet loaded.
   #
   # @return [Boolean] `true` if the timelet is loaded, otherwise `false`
   #
-  isLoaded: -> @get('loaded')
+  isLoaded: -> @state.loaded
 
   # Decrements the timer value by one until it reaches zero.
   #
   tick: =>
-    @set timer: (@get('timer') - 1)
+    @state.timer--
     @stop() if @isFinished()
+    @trigger 'tick'
 
   # Loads a timer.
   #
   load: ->
     @collection.unload()
-    @set { timer: @get('duration'), running: false }, { silent: true }
-    @set loaded: true
+    @state.timer = @get 'duration'
+    @state.loaded = true
+    @state.running = false
+    @trigger 'loaded'
 
   # Marks the timelet as not loaded.
   #
-  unload: -> @set loaded: false
+  unload: ->
+    @state.loaded = false
+    @trigger 'unloaded'
 
   # Starts the timer.
   #
   start: ->
     return unless @isValid()
     return if @isRunning()
+    return if @isFinished()
 
-    @set running: true
+    @state.running = true
     @runner = setInterval @tick, 1000
+    @trigger 'start'
 
   # Stops the timer.
   #
@@ -68,7 +77,8 @@ class Essence.Models.Timelet extends Backbone.Model
     clearInterval @runner
     delete @runner
 
-    @set running: false
+    @state.running = false
+    @trigger 'stop'
 
   # Pauses or starts the timer.
   #
@@ -78,7 +88,7 @@ class Essence.Models.Timelet extends Backbone.Model
   # Restarts the timer.
   #
   restart: ->
-    @set timer: @get('duration')
+    @state.timer = @get 'duration'
     if @isRunning()
       @stop()
       @start()

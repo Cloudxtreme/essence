@@ -6,10 +6,11 @@ module Support
     #
     # @param [String] editable selector for the target element
     # @param [String] value the value to fill in
+    # @param [Hash] options options to pass to the node finder
     #
-    def fill_in_editable(editable, value)
-      node = page.first :css, editable
-      raise "Must pass a hash containing 'from'" unless node
+    def fill_in_editable(editable, value, options = {})
+      node = page.first :css, editable, options
+      raise "Node not found" unless node
 
       # Activate the element
       node.click
@@ -23,16 +24,18 @@ module Support
       node.native.send_keys value.to_s
     end
 
-    # Create a timelet by using the clock view.
+    # Create a timelet using the UI.
     #
     # @param [String] name the name of the timelet
     # @param [Integer] duration the duration of the timlet
     #
-    def create_clock_timelet(name, duration)
-      within 'section.clock' do 
-        fill_in_editable 'span.name', name
-        fill_in_editable 'span.time', duration.to_s
-        find('.title').click
+    def create_timelet(name, duration)
+      within 'section.timelets' do 
+        find('.add').click
+        page.should have_content 'Duration:'
+        fill_in_editable '.name.editable', name, text: 'New Timelet'
+        fill_in_editable '.duration span.editable', duration.to_s, text: 0
+        find('.details label').click
         find('.save').click
       end
     end

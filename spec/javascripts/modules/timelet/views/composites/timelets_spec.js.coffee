@@ -3,9 +3,11 @@ describe 'Essence.Views.Timelets', ->
     @model = new Essence.Models.Timelet
       name: 'Awesome timer'
       duration: 42
-      running: true
-      timer: 10
+    @model.state.running = true
+    @model.state.timer = 10
+
     @collection = new Essence.Collections.Timelets [@model]
+
     @parent = new Essence.Views.TimeletsPanel model: @model, collection: @collection
     @view = new Essence.Views.Timelets model: @model, collection: @collection, parent: @parent
     @html = @view.render().$el
@@ -24,12 +26,6 @@ describe 'Essence.Views.Timelets', ->
       expect(@view.collection).toBe @collection
 
   describe '#initialize', ->
-    it 'renders on collection sync', ->
-      @model.set name: 'Foobar timer'
-      expect(@view.ui.timelets).toContainText 'Awesome timer'
-      @collection.trigger 'sync'
-      expect(@view.ui.timelets).toContainText 'Foobar timer'
-
     it 'loads the timelet on timelet load', ->
       stub = sinon.stub @view.options.parent, 'trigger'
       model = new Essence.Models.Timelet
@@ -43,15 +39,10 @@ describe 'Essence.Views.Timelets', ->
       expect(@view.ui.timelets).toContainText 'Awesome timer'
 
   describe '#createTimelet', ->
-    beforeEach ->
-      @stub = sinon.stub @view.options.parent, 'trigger'
-
-    afterEach ->
-      @stub.restore()
-
-    it 'triggers the create event on the parent', ->
+    it 'adds a new timelet to the collection', ->
+      expect(@collection.length).toEqual 1
       @view.createTimelet()
-      expect(@stub).toHaveBeenCalledWith 'timelet:create'
+      expect(@collection.length).toEqual 2
 
     it 'navigates to the index', ->
       @view.createTimelet()
