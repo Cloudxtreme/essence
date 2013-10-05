@@ -13,14 +13,14 @@ class Essence.Views.Timelet extends Backbone.Marionette.ItemView
   events:
     'click .delete'  : 'delete'
     'click .load'    : 'load'
-    'click .name'    : 'open'
-    'click .close'   : 'close'
+    'click .name'    : 'expand'
+    'click .close'   : 'collapse'
     'click .save'    : 'save'
     'blur .editable' : 'updateValue'
 
   initialize: ->
     @listenTo @model, 'change:loaded', @render
-    @listenTo @model.collection, 'close', @close
+    @listenTo @model.collection, 'collapse', @collapse
     @listenTo @model, 'invalid', @markValidationErrors
 
   # Updates the model attribute with the corresponding field value.
@@ -41,10 +41,10 @@ class Essence.Views.Timelet extends Backbone.Marionette.ItemView
 
   # Shows or hides details of the timelet.
   #
-  open: ->
+  expand: ->
     return if @model.expanded
     else
-      @model.collection.trigger 'close'
+      @model.collection.trigger 'collapse'
       @model.expanded = true
       @ui.details.slideDown()
       @ui.label.attr 'contentEditable', 'true'
@@ -52,7 +52,8 @@ class Essence.Views.Timelet extends Backbone.Marionette.ItemView
 
   # Hides details of the timelet.
   #
-  close: ->
+  collapse: ->
+    return unless @model.expanded
     delete @model.expanded
     @ui.label.removeAttr 'contentEditable'
     @ui.label.removeClass 'editing'
