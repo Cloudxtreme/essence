@@ -71,6 +71,7 @@ class Essence.Views.Clock extends Backbone.Marionette.ItemView
   updateDuration: (event) =>
     if duration = parseInt @ui.clockTimer.text()
       @model.set duration: duration
+      @model.state.timer = duration
     @ui.clockSave.fadeIn() if @model.hasChanged('duration')
 
   # Render the current timer value.

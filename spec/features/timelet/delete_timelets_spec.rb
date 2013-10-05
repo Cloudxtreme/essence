@@ -15,11 +15,15 @@ feature 'Creating timelets' do
       page.should have_content 'My first timelet'
       page.should have_content 'My second timelet'
 
+      find('span.name', text: 'My first timelet').click
+      page.should have_css '.details .delete'
       first('.delete').click
 
       page.should have_no_content 'My first timelet'
       page.should have_content 'My second timelet'
 
+      find('span', text: 'My second timelet').click
+      page.should have_css '.details .delete'
       first('.delete').click
 
       page.should have_no_content 'My first timelet'
