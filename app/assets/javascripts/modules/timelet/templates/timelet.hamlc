@@ -1,5 +1,5 @@
 %h3
-  %span.button.icon.load{ class: 'loaded' if @loaded }
+  %span.button.icon.load
   %span.editable.name{ contentEditable: 'true', data: { attribute: 'name' } }= @name
 
 .details.hidden

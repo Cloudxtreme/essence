@@ -3,8 +3,9 @@ describe 'Essence.Views.TimeletsPanel', ->
     @model = new Essence.Models.Timelet
       name: 'Awesome timer'
       duration: 42
-      running: true
-      timer: 10
+    @model.state.running = true
+    @model.state.timer = 10
+
     @collection = new Essence.Collections.Timelets [@model]
     @model.collection = @collection
 

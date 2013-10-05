@@ -19,8 +19,10 @@ describe 'Essence.Collections.Timelets', ->
 
   describe '#unload', ->
     it 'unloads each model in the collection', ->
-      modelA = new Essence.Models.Timelet loaded: false
-      modelB = new Essence.Models.Timelet loaded: false
+      modelA = new Essence.Models.Timelet
+      modelA.unload()
+      modelB = new Essence.Models.Timelet
+      modelB.unload()
       @collection.add [modelA, modelB]
       @collection.unload()
       expect(modelA.isLoaded()).toBeFalsy()

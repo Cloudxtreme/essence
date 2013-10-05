@@ -7,9 +7,11 @@ class Essence.Views.Clock extends Backbone.Marionette.ItemView
   initialize: ->
     @listenTo @model, 'sync', @render
 
-    @listenTo @model, 'change:timer', @renderTimer
-    @listenTo @model, 'change:running', @renderPlayButton
-    @listenTo @model, 'change:running', @toggleTimerEditability
+    @listenTo @model, 'tick',  @renderTimer
+    @listenTo @model, 'start', @applyRunningState
+    @listenTo @model, 'stop',  @applyRunningState
+    @listenTo @model, 'start', @toggleTimerEditability
+    @listenTo @model, 'stop',  @toggleTimerEditability
 
   ui:
     timer:      '.timer'
@@ -29,10 +31,6 @@ class Essence.Views.Clock extends Backbone.Marionette.ItemView
   #
   pauseTimelet: -> @model.pause()
 
-  # Restarts the current timer.
-  #
-  restartTimelet: -> @model.restart()
-
   # Starts the current timer.
   #
   startTimelet: -> @model.start()
@@ -40,6 +38,12 @@ class Essence.Views.Clock extends Backbone.Marionette.ItemView
   # Stops the current timer.
   #
   stopTimelet: -> @model.stop()
+
+  # Restarts the current timer.
+  #
+  restartTimelet: ->
+    @model.restart()
+    @renderTimer()
 
   # Saves the timelet to the collection.
   #
@@ -66,29 +70,23 @@ class Essence.Views.Clock extends Backbone.Marionette.ItemView
   #
   updateDuration: (event) =>
     if duration = parseInt @ui.clockTimer.text()
-      @model.set
-        duration: duration
-        timer: duration
+      @model.set duration: duration
     @ui.clockSave.fadeIn() if @model.hasChanged('duration')
 
   # Render the current timer value.
   #
   renderTimer: =>
-    @ui.clockTimer.text @model.get('timer')
+    @ui.clockTimer.text @model.state.timer
 
-  # Render the play button depending on the status of the timelet.
+  # Marks the clock as running if applicable.
   #
-  renderPlayButton: =>
-    @$el.toggleClass 'running', @model.get('running')
+  applyRunningState: =>
+    @$el.toggleClass 'running', @model.isRunning()
 
-  # Allow the timer field to be edited only when the Timelet is
-  # not running.
+  # Allow the timer field to be edited if it's running.
   #
-  # @param [Backbone.Model] model Model of the timelet
-  # @param [Boolean] running flag indicating if the timer is running
-  #
-  toggleTimerEditability: (model, running) =>
-    if running
+  toggleTimerEditability: =>
+    if @model.isRunning()
       @ui.clockTimer.removeAttr 'contentEditable'
     else
       @ui.clockTimer.attr 'contentEditable', 'true'

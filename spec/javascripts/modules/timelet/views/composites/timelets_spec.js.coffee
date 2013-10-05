@@ -3,9 +3,11 @@ describe 'Essence.Views.Timelets', ->
     @model = new Essence.Models.Timelet
       name: 'Awesome timer'
       duration: 42
-      running: true
-      timer: 10
+    @model.state.running = true
+    @model.state.timer = 10
+
     @collection = new Essence.Collections.Timelets [@model]
+
     @parent = new Essence.Views.TimeletsPanel model: @model, collection: @collection
     @view = new Essence.Views.Timelets model: @model, collection: @collection, parent: @parent
     @html = @view.render().$el
@@ -24,10 +26,10 @@ describe 'Essence.Views.Timelets', ->
       expect(@view.collection).toBe @collection
 
   describe '#initialize', ->
-    it 'renders on collection sync', ->
+    it 'renders on when models are created in the collection', ->
       @model.set name: 'Foobar timer'
       expect(@view.ui.timelets).toContainText 'Awesome timer'
-      @collection.trigger 'sync'
+      @collection.trigger 'create'
       expect(@view.ui.timelets).toContainText 'Foobar timer'
 
     it 'loads the timelet on timelet load', ->
