@@ -1,6 +1,6 @@
 # Model for a Timelet
 #
-class Essence.Models.Timelet extends Backbone.Model
+class Essence.Models.Timelet extends Essence.Model
   localStorage: new Backbone.LocalStorage 'Timelets'
 
   defaults:
@@ -78,15 +78,9 @@ class Essence.Models.Timelet extends Backbone.Model
   # Restarts the timer.
   #
   restart: ->
-    @set timer: @get('duration')
+    @state.timer = @get 'duration'
     if @isRunning()
       @stop()
       @start()
     else
       @stop()
-
-  # TODO refactor this into an Essence.Model
-  #
-  setStrict: (attribute, value) ->
-    value = parseInt(value) if typeof @defaults[attribute] is 'number'
-    @set attribute, value
