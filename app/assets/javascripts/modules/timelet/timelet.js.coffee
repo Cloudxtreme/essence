@@ -50,8 +50,8 @@ class Essence.Timelet
     @layout = new Essence.Timelet.Layout()
     App.container.show @layout
 
+    @layout.header.show new Essence.Views.Header()
     # TODO
-    #@layout.header.show new Essence.Views.Header()
     #@layout.footer.show new Essence.Views.Footer()
 
   # Renders both the clock and the timelets collection.
