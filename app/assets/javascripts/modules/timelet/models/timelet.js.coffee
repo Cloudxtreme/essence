@@ -4,7 +4,7 @@ class Essence.Models.Timelet extends Essence.Model
   localStorage: new Backbone.LocalStorage 'Timelets'
 
   defaults:
-    name: 'New timelet'
+    name: ''
     duration: 0
 
   validate: (attrs, options) ->

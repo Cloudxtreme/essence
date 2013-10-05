@@ -1,10 +1,9 @@
 .title
   %h2
-    %span.editable.name{ contentEditable: 'true' }= @name
-    %span.button.icon.save{ title: 'save this timelet' }
+    %span.name= @name
 
 .timer
-  %span.editable.time{ contentEditable: 'true' }= @duration
+  %span.time= @duration
 
 .controls
   %span.button.icon.play{ title: 'Play timelet' }

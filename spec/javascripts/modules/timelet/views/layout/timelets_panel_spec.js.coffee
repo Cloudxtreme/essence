@@ -32,10 +32,6 @@ describe 'Essence.Views.TimeletsPanel', ->
       @view.trigger 'timelet:load', model.cid
       expect(@view.model.get('name')).toEqual 'Fantastic timer'
 
-    it 'creates a timelet on timelet create', ->
-      @view.trigger 'timelet:create'
-      expect(@view.model.get('name')).toEqual 'New timelet'
-
     describe 'fetching the collection', ->
       describe 'with a model ID', ->
         beforeEach ->
@@ -89,15 +85,3 @@ describe 'Essence.Views.TimeletsPanel', ->
       @view.collection.add model
       @view.loadTimelet model
       expect(@html.find('section.clock')).toContainText 'Fantasic timer'
-
-  describe '#createTimelet', ->
-    it 'saves any changes to the current timelet', ->
-      spy = sinon.spy @view.model, 'save'
-      @view.createTimelet()
-      expect(spy).toHaveBeenCalled()
-      spy.restore()
-
-    it 'instanciates a new timelet', ->
-      expect(@view.model.cid).toEqual @model.cid
-      @view.createTimelet()
-      expect(@view.model.cid).not.toEqual @model.cid

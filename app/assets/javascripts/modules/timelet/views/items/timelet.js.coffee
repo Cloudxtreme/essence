@@ -26,6 +26,7 @@ class Essence.Views.Timelet extends Backbone.Marionette.ItemView
 
   onRender: ->
     @applyLoadedState()
+    @expand() if @model.state.expanded
 
   # Updates the model attribute with the corresponding field value.
   #

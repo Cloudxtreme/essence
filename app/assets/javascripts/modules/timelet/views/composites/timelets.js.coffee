@@ -13,13 +13,12 @@ class Essence.Views.Timelets extends Backbone.Marionette.CompositeView
 
   ui:
     timelets: 'ul'
+    add:      '.add'
 
   events:
     'click .add': 'createTimelet'
 
   initialize: ->
-    @listenTo @collection, 'create', @render
-
     @on 'itemview:timelet:load', (viewItem) =>
       @options.parent.trigger 'timelet:load', viewItem.model.id
 
@@ -28,5 +27,7 @@ class Essence.Views.Timelets extends Backbone.Marionette.CompositeView
   # @param [jQuery.Event] event the click event
   #
   createTimelet: (event) =>
-    @options.parent.trigger 'timelet:create'
+    model = new Essence.Models.Timelet
+    model.state.expanded = true
+    @collection.add model
     Backbone.history.navigate '/timelet'

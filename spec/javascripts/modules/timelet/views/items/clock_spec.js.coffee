@@ -47,15 +47,6 @@ describe 'Essence.Views.Clock', ->
       @model.trigger 'stop'
       expect(@view.$el).not.toHaveClass 'running'
 
-    it 'toggles editability when the clock stops or starts', ->
-      expect(@view.ui.clockTimer).toHaveAttr 'contentEditable'
-      @model.state.running = true
-      @model.trigger 'start'
-      expect(@view.ui.clockTimer).not.toHaveAttr 'contentEditable'
-      @model.state.running = false
-      @model.trigger 'stop'
-      expect(@view.ui.clockTimer).toHaveAttr 'contentEditable'
-
   describe '#render', ->
     it 'shows the clock', ->
       expect(@view.ui.clockTitle).toContainText 'Awesome timer'
@@ -94,83 +85,6 @@ describe 'Essence.Views.Clock', ->
       @view.restartTimelet()
       expect(@view.ui.clockTimer).toContainText '42'
 
-  describe '#saveTimelet', ->
-    describe 'with a new timelet', ->
-      beforeEach ->
-        @view.model = new Essence.Models.Timelet { id: 456, name: 'Funky timer' }, collection: @collection
-
-      it 'adds the current timelet to the collection', ->
-        expect(@collection.length).toEqual 1
-        expect(@collection.findWhere(name: 'Funky timer')).toBeUndefined()
-        @view.saveTimelet()
-        expect(@collection.length).toEqual 2
-        expect(@collection.findWhere(name: 'Funky timer')).toBeDefined()
-
-    describe 'with a modified timelet', ->
-      it 'merges the current timelet with the collection', ->
-        expect(@collection.length).toEqual 1
-        expect(@collection.findWhere(name: 'Funky timer')).toBeUndefined()
-        @view.model.set name: 'Funky timer'
-        @view.saveTimelet()
-        expect(@collection.length).toEqual 1
-        expect(@collection.findWhere(name: 'Funky timer')).toBeDefined()
-
-    it 'saves the model', ->
-      spy = sinon.spy @model, 'save'
-      @view.saveTimelet()
-      expect(spy).toHaveBeenCalled()
-      spy.restore()
-
-    it 'navigates to the new model', ->
-      @view.saveTimelet()
-      expect(@navigation).toHaveBeenCalledWith "/timelet/#{ @model.id }"
-
-  describe '#updateName', ->
-    beforeEach ->
-      @view.model.set name: 'Nada'
-      @view.ui.clockTitle.text 'Something indeed'
-      @view.ui.clockSave.css display: 'none'
-
-    it 'copies the name from the field to the model', ->
-      @view.updateName()
-      expect(@view.model.get('name')).toEqual 'Something indeed'
-
-    it 'displays the save button', ->
-      @view.updateName()
-      expect(@view.model.hasChanged('name')).toBeTruthy()
-      expect(@view.ui.clockSave).not.toHaveCss display: 'none'
-
-    describe 'when the name did not change', ->
-      beforeEach ->
-        @view.ui.clockTitle.text 'Nada'
-
-      it 'does not display the save button', ->
-        @view.updateName()
-        expect(@view.ui.clockSave).toHaveCss display: 'none'
-
-  describe '#updateDuration', ->
-    beforeEach ->
-      @view.model.set duration: 45
-      @view.ui.clockTimer.text '42'
-      @view.ui.clockSave.css display: 'none'
-
-    it 'copies the duration from the field to the model', ->
-      @view.updateDuration()
-      expect(@view.model.get('duration')).toEqual 42
-
-    it 'displays the save button', ->
-      @view.updateDuration()
-      expect(@view.model.hasChanged('duration')).toBeTruthy()
-      expect(@view.ui.clockSave).not.toHaveCss display: 'none'
-
-    describe 'when the duration did not change', ->
-      beforeEach ->
-        @view.ui.clockTimer.text '45'
-
-      it 'does not display the save button', ->
-        @view.updateDuration()
-        expect(@view.ui.clockSave).toHaveCss display: 'none'
-
   describe '#renderTimer', ->
     it 'renders the timer', ->
       @view.renderTimer()
@@ -197,22 +111,3 @@ describe 'Essence.Views.Clock', ->
       it 'removes the running class from the view', ->
         @view.applyRunningState()
         expect(@view.$el).not.toHaveClass 'running'
-
-  describe '#toggleTimerEditability', ->
-    describe 'with a running clock', ->
-      beforeEach ->
-        @view.ui.clockTimer.attr 'contentEditable', 'true'
-        @model.state.running = true
-
-      it 'prevents the timer from being edited', ->
-        @view.toggleTimerEditability()
-        expect(@view.ui.clockTimer).not.toHaveAttr 'contentEditable'
-
-    describe 'with a stopped clock', ->
-      beforeEach ->
-        @view.ui.clockTimer.removeAttr 'contentEditable'
-        @model.state.running = false
-
-      it 'allows the timer to be edited', ->
-        @view.toggleTimerEditability()
-        expect(@view.ui.clockTimer).toHaveAttr 'contentEditable'

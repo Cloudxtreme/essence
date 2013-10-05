@@ -1,4 +1,5 @@
 %h2 Timelets
 %ul
   %li
-    %span.button.icon.add{ title: 'Add a new timelet' }
+    %h3
+      %span.button.icon.add{ title: 'Add a new timelet' }
