@@ -1,0 +1,8 @@
+.source
+  Made with Backbone.js, HTML5 and Rails 4, available on
+  %a.icon-github-alt{ href: 'https://www.github.com/kaethorn/essence' }
+.contact
+  © Falko Schmidt
+  %a.icon-github{ href: 'https://www.github.com/kaethorn' }
+  %a.icon-twitter{ href: 'https://www.twitter.com/kaethorn' }
+  %a.icon-google-plus{ href: 'https://plus.google.com/u/0/104414564769351832134/about' }
