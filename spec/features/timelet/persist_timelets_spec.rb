@@ -11,15 +11,15 @@ feature 'Creating timelets' do
     create_timelet 'My second timelet', 30
 
     within 'section.timelets' do
-      page.should have_content 'My first timelet'
-      page.should have_content 'My second timelet'
+      page.should have_field 'name', with: 'My first timelet'
+      page.should have_field 'name', with: 'My second timelet'
     end
 
     visit '/timelet'
 
     within 'section.timelets' do
-      page.should have_content 'My first timelet'
-      page.should have_content 'My second timelet'
+      page.should have_field 'name', with: 'My first timelet'
+      page.should have_field 'name', with: 'My second timelet'
     end
   end
 
@@ -28,22 +28,22 @@ feature 'Creating timelets' do
     create_timelet 'My second timelet', 30
 
     within 'section.timelets' do
-      page.should have_content 'My first timelet'
-      page.should have_content 'My second timelet'
+      page.should have_field 'name', with: 'My first timelet'
+      page.should have_field 'name', with: 'My second timelet'
     end
 
     within 'section.timelets' do
-      find_timelet('My first timelet').click
+      load_timelet 'My first timelet'
     end
     first_timelet_path = current_path
 
     within 'section.timelets' do
-      page.should have_content 'My first timelet'
-      page.should have_content 'My second timelet'
+      page.should have_field 'name', with: 'My first timelet'
+      page.should have_field 'name', with: 'My second timelet'
     end
 
     within 'section.timelets' do
-      find_timelet('My second timelet').click
+      load_timelet 'My second timelet'
     end
     second_timelet_path = current_path
 
@@ -54,8 +54,8 @@ feature 'Creating timelets' do
     end
 
     within 'section.timelets' do
-      page.should have_content 'My first timelet'
-      page.should have_content 'My second timelet'
+      page.should have_field 'name', with: 'My first timelet'
+      page.should have_field 'name', with: 'My second timelet'
     end
 
     visit second_timelet_path
@@ -65,19 +65,9 @@ feature 'Creating timelets' do
     end
 
     within 'section.timelets' do
-      page.should have_content 'My first timelet'
-      page.should have_content 'My second timelet'
+      page.should have_field 'name', with: 'My first timelet'
+      page.should have_field 'name', with: 'My second timelet'
     end
-  end
-
-  private
-
-  # Finds the timelet with the given name
-  #
-  # @param [String] name the name of the timelet
-  #
-  def find_timelet(name)
-    find :xpath, "//section[@class='timelets']//span[contains(text(),'#{name}')]/../span[contains(@class,'load')]"
   end
 
 end

@@ -57,7 +57,7 @@ describe 'Essence.Views.TimeletsPanel', ->
 
     it 'shows the timelets list', ->
       expect(@html).toContain 'section.timelets'
-      expect(@html.find('section.timelets')).toContainText 'Awesome timer'
+      expect(@html.find('section.timelets input')).toHaveValue 'Awesome timer'
 
   describe '#loadTimelet', ->
     it 'stops any currently running clocks', ->

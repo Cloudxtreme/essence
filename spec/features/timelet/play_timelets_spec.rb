@@ -46,12 +46,12 @@ feature 'Playing timelets' do
     scenario 'loading a timelet while another one is running' do
 
       within 'section.timelets' do
-        page.should have_content 'My first timelet'
-        page.should have_content 'My second timelet'
+        page.should have_field 'name', with: 'My first timelet'
+        page.should have_field 'name', with: 'My second timelet'
       end
 
       within 'section.timelets' do
-        find('h3', text: 'My second timelet').find('.load').click
+        load_timelet 'My second timelet'
       end
 
       within 'section.clock' do

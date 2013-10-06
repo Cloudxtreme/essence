@@ -36,7 +36,7 @@ describe 'Essence.Views.Timelets', ->
 
   describe '#render', ->
     it 'shows the timelets list', ->
-      expect(@view.ui.timelets).toContainText 'Awesome timer'
+      expect(@view.ui.timelets.find('input')).toHaveValue 'Awesome timer'
 
   describe '#createTimelet', ->
     it 'adds a new timelet to the collection', ->

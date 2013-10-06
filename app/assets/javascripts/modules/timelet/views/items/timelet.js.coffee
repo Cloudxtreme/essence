@@ -5,18 +5,18 @@ class Essence.Views.Timelet extends Backbone.Marionette.ItemView
   tagName: 'li'
 
   ui:
-    details:    '.details'
-    name:       '.name'
-    save:       '.save'
-    attributes: '[data-attribute]'
+    details: '.details'
+    name:    '.name'
+    save:    '.save'
+    fields:  'input'
 
   events:
-    'click .delete'  : 'delete'
-    'click .load'    : 'load'
-    'click .name'    : 'expand'
-    'click .close'   : 'collapse'
-    'click .save'    : 'save'
-    'blur .editable' : 'updateModel'
+    'click .delete':           'delete'
+    'click .load':             'load'
+    'click .save':             'save'
+    'click .close':            'collapse'
+    'click input[name=name]':  'expand'
+    'change input[type=text]': 'updateModel'
 
   initialize: ->
     @listenTo @model, 'loaded',   @applyLoadedState
@@ -34,12 +34,12 @@ class Essence.Views.Timelet extends Backbone.Marionette.ItemView
   #
   updateModel: (event) =>
     el = $(event.currentTarget)
-    attribute = el.data 'attribute'
+    attribute = el.attr 'name'
 
     return unless @model.has attribute
 
-    @model.setStrict attribute, el.text()
-    if @model.hasChanged(attribute) and @model.isValid()
+    @model.setStrict attribute, el.val()
+    if @model.isValid() and @model.hasChanged(attribute)
       @enableSaveButton()
     else
       @disableSaveButton()
@@ -52,16 +52,12 @@ class Essence.Views.Timelet extends Backbone.Marionette.ItemView
     @expanded = true
     @ui.details.slideDown()
 
-    @toggleNameEditability()
-
   # Hides details of the timelet.
   #
   collapse: ->
     return unless @expanded
     @expanded = false
     @ui.details.slideUp()
-
-    @toggleNameEditability()
 
   # Deletes the timelet from the collection.
   #
@@ -90,12 +86,12 @@ class Essence.Views.Timelet extends Backbone.Marionette.ItemView
   #
   markValidationErrors: (model, errors) =>
     for attribute, error of errors
-      @$el.find("[data-attribute=#{ attribute }]").addClass 'validation-error'
+      @$el.find("input[name=#{ attribute }]").addClass 'validation-error'
 
   # Removes validation error markings.
   #
   unmarkValidationErrors: ->
-    @ui.attributes.removeClass 'validation-error'
+    @ui.fields.removeClass 'validation-error'
 
   # Sets the current timelet as the active one.
   #
@@ -108,13 +104,3 @@ class Essence.Views.Timelet extends Backbone.Marionette.ItemView
   #
   applyLoadedState: =>
     @$el.toggleClass 'loaded', @model.isLoaded()
-
-  # Allow the name field to be edited if the details are expanded.
-  #
-  toggleNameEditability: =>
-    if @expanded
-      @ui.name.attr 'contentEditable', 'true'
-      @ui.name.addClass 'editing'
-    else
-      @ui.name.removeAttr 'contentEditable'
-      @ui.name.removeClass 'editing'

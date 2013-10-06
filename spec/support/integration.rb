@@ -33,11 +33,19 @@ module Support
       within 'section.timelets' do 
         find('.add').click
         page.should have_content 'Duration:'
-        fill_in_editable '.name.editable', name, text: 'New Timelet'
-        fill_in_editable '.duration span.editable', duration.to_s, text: 0
+        find_field('name', with: 'New Timelet').set name
+        find_field('duration', with: '0').set duration.to_s
         find('.details label').click
         find('.save').click
       end
+    end
+
+    # Loads a named timelet from the list
+    #
+    # @param [String] name the name of the timelet
+    #
+    def load_timelet(name)
+      find_field('name', with: name).find(:xpath, "../../a").click
     end
 
     # Initializes a fake clock in the browser.

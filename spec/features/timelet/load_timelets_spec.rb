@@ -11,10 +11,10 @@ feature 'Creating timelets' do
     create_timelet 'My second timelet', 30
 
     within 'section.timelets' do
-      page.should have_content 'My first timelet'
-      page.should have_content 'My second timelet'
+      page.should have_field 'name', with: 'My first timelet'
+      page.should have_field 'name', with: 'My second timelet'
 
-      find('h3', text: 'My second timelet').find('.load').click
+      load_timelet 'My second timelet'
     end
 
     within 'section.clock' do
@@ -22,7 +22,7 @@ feature 'Creating timelets' do
     end
 
     within 'section.timelets' do
-      find('h3', text: 'My first timelet').find('.load').click
+      load_timelet 'My first timelet'
     end
 
     within 'section.clock' do

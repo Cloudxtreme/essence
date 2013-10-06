@@ -10,19 +10,19 @@ feature 'Editing timelets' do
     create_timelet 'My first timelet', 33
 
     within 'section.timelets' do
-      page.should have_content 'My first timelet'
+      page.should have_field 'name', with: 'My first timelet'
 
-      find('span.name', text: 'My first timelet').click
-      page.should have_content '33'
+      find_field('name', with: 'My first timelet').click
+      page.should have_field 'duration', with: '33'
 
-      fill_in_editable '.duration span.editable', '67'
-      fill_in_editable '.name.editable', 'My edited timelet'
+      find_field('duration').set '67'
+      find_field('name').set 'My edited timelet'
       find('.details label').click
 
       find('.save').click
 
-      page.should have_no_content 'My first timelet'
-      page.should have_content 'My edited timelet'
+      page.should have_no_field 'name', with: 'My first timelet'
+      page.should have_field 'name', with: 'My edited timelet'
     end
   end
 end

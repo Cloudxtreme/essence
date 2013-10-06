@@ -34,9 +34,9 @@ describe 'Essence.Views.Timelet', ->
       expect(@view.$el).not.toHaveClass 'loaded'
 
     it 'marks invalid fields on validation error', ->
-      expect(@view.$el.find('[data-attribute=duration]')).not.toHaveClass 'validation-error'
+      expect(@view.$el.find('input[name=duration]')).not.toHaveClass 'validation-error'
       @model.trigger 'invalid', @model, duration: 'too short'
-      expect(@view.$el.find('[data-attribute=duration]')).toHaveClass 'validation-error'
+      expect(@view.$el.find('input[name=duration]')).toHaveClass 'validation-error'
 
     it 'collapses the Timelet when the collection is collapsed', ->
       @view.expanded = true
@@ -46,7 +46,7 @@ describe 'Essence.Views.Timelet', ->
 
   describe '#render', ->
     it 'renders the model', ->
-      expect(@html).toContain '.name:contains(My test Timelet)'
+      expect(@view.ui.fields).toHaveValue 'My test Timelet'
 
     it 'renders a delete button', ->
       expect(@html).toContain '.button.delete'
@@ -70,7 +70,7 @@ describe 'Essence.Views.Timelet', ->
 
     describe 'with a non-existant attribute', ->
       beforeEach ->
-        @event.currentTarget = $ '<div data-attribute=foobar></div>'
+        @event.currentTarget = $ '<input name=foobar>'
         @view.updateModel @event
 
       it 'does nothing', ->
@@ -78,7 +78,7 @@ describe 'Essence.Views.Timelet', ->
 
     describe 'with an existant attribute', ->
       beforeEach ->
-        @event.currentTarget = $ '<div data-attribute=name>New name</div>'
+        @event.currentTarget = $ '<input name=name value="New name">'
 
       it 'sets the attribute on the model', ->
         @view.updateModel @event
@@ -86,7 +86,7 @@ describe 'Essence.Views.Timelet', ->
 
       describe 'and a valid model with changed values', ->
         beforeEach ->
-          @event.currentTarget = $ '<div data-attribute=name>New name</div>'
+          @event.currentTarget = $ '<input name=name value="New name">'
 
         it 'enables the save button', ->
           spy = sinon.spy @view, 'enableSaveButton'
@@ -96,7 +96,7 @@ describe 'Essence.Views.Timelet', ->
 
       describe 'and a valid model and no changed values', ->
         beforeEach ->
-          @event.currentTarget = $ '<div data-attribute=name>My test Timelet</div>'
+          @event.currentTarget = $ '<input name=name value="My test Timelet">'
 
         it 'disables the save button', ->
           spy = sinon.spy @view, 'disableSaveButton'
@@ -106,7 +106,7 @@ describe 'Essence.Views.Timelet', ->
 
       describe 'and an invalid model and changed values', ->
         beforeEach ->
-          @event.currentTarget = $ '<div data-attribute=duration>invalid duration</div>'
+          @event.currentTarget = $ '<input name=duration value="invalid duration">'
 
         it 'disables the save button', ->
           spy = sinon.spy @view, 'disableSaveButton'
@@ -124,12 +124,6 @@ describe 'Essence.Views.Timelet', ->
       spy = sinon.spy @collection, 'trigger'
       @view.expand()
       expect(spy).toHaveBeenCalledWith 'collapse'
-      spy.restore()
-
-    it 'toggles editability', ->
-      spy = sinon.spy @view, 'toggleNameEditability'
-      @view.expand()
-      expect(spy).toHaveBeenCalled()
       spy.restore()
 
     it 'sets the expanded state', ->
@@ -157,12 +151,6 @@ describe 'Essence.Views.Timelet', ->
       @view.collapse()
       expect(@view.ui.details).not.toBeVisible()
 
-    it 'toggles editability', ->
-      spy = sinon.spy @view, 'toggleNameEditability'
-      @view.collapse()
-      expect(spy).toHaveBeenCalled()
-      spy.restore()
-
     it 'sets the expanded state', ->
       @view.expanded = true
       expect(@view.expanded).toBeTruthy()
@@ -174,10 +162,8 @@ describe 'Essence.Views.Timelet', ->
         @view.expanded = false
 
       it 'does nothing', ->
-        spy = sinon.spy @view, 'toggleNameEditability'
         @view.collapse()
-        expect(spy).not.toHaveBeenCalled()
-        spy.restore()
+        expect(@view.expanded).toBeFalsy()
 
   describe '#delete', ->
     it 'destroys the model', ->
@@ -225,18 +211,18 @@ describe 'Essence.Views.Timelet', ->
 
   describe '#markValidationErrors', ->
     it 'adds validation errors to fields', ->
-      expect(@view.$el.find('[data-attribute=duration]')).not.toHaveClass 'validation-error'
+      expect(@view.$el.find('input[name=duration]')).not.toHaveClass 'validation-error'
       @view.markValidationErrors @model, duration: 'too short'
-      expect(@view.$el.find('[data-attribute=duration]')).toHaveClass 'validation-error'
+      expect(@view.$el.find('input[name=duration]')).toHaveClass 'validation-error'
 
   describe '#unmarkValidationErrors', ->
     beforeEach ->
-      @view.$el.find('[data-attribute=duration]').addClass 'validation-error'
+      @view.$el.find('input[name=duration]').addClass 'validation-error'
 
     it 'removes validation errors from fields', ->
-      expect(@view.$el.find('[data-attribute=duration]')).toHaveClass 'validation-error'
+      expect(@view.$el.find('input[name=duration]')).toHaveClass 'validation-error'
       @view.unmarkValidationErrors @model, duration: 'too short'
-      expect(@view.$el.find('[data-attribute=duration]')).not.toHaveClass 'validation-error'
+      expect(@view.$el.find('input[name=duration]')).not.toHaveClass 'validation-error'
 
   describe '#load', ->
     it 'triggers the load event', ->
@@ -275,29 +261,3 @@ describe 'Essence.Views.Timelet', ->
       it 'removes the running class from the view', ->
         @view.applyLoadedState()
         expect(@view.$el).not.toHaveClass 'loaded'
-
-  describe '#toggleNameEditability', ->
-    describe 'with a collapsed timelet', ->
-      beforeEach ->
-        @view.ui.name.addClass 'editing'
-        @view.ui.name.attr 'contentEditable', 'true'
-        @view.expanded = false
-        @view.toggleNameEditability()
-
-      it 'prevents the timelet from being edited', ->
-        expect(@view.ui.name).not.toHaveAttr 'contentEditable'
-
-      it 'removes the editing class', ->
-        expect(@view.ui.name).not.toHaveClass 'editing'
-
-    describe 'with an expanded timelet', ->
-      beforeEach ->
-        @view.ui.name.removeAttr 'contentEditable'
-        @view.expanded = true
-        @view.toggleNameEditability()
-
-      it 'allows the timer to be edited', ->
-        expect(@view.ui.name).toHaveAttr 'contentEditable'
-
-      it 'sets the editing class', ->
-        expect(@view.ui.name).toHaveClass 'editing'

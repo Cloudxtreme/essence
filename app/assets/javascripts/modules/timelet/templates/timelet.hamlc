@@ -1,17 +1,13 @@
-%h3
-  %span.button.icon.load
-  %span.editable.name{ contentEditable: 'true', data: { attribute: 'name' } }= @name
+%a.button.icon.load
+.timelet
+  %input{ type: 'text', size: 15, name: 'name', value: @name }
 
-.details.hidden
-  .duration
-    %label
-      Duration:
-      %span.editable{ contentEditable: 'true', data: { attribute: 'duration' } }= @duration
-      %span s
-  .loop
-    %label{ title: 'Play this timlet in an endless loop' }
-      %input{ type: 'checkbox' }
-      loop
-  .button.icon.close{ title: 'Close' }
-  .button.icon.delete{ title: 'Delete this timelet' }
-  .button.icon.hidden.save{ title: 'Save' }
+  .details.hidden
+    .duration
+      %label
+        Duration:
+        %input{ type: 'text', size: 4, name: 'duration', value: @duration }
+        s
+    .button.icon.close{ title: 'Close' }
+    .button.icon.delete{ title: 'Delete this timelet' }
+    .button.icon.hidden.save{ title: 'Save' }
