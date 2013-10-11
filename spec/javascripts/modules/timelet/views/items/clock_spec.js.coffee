@@ -104,6 +104,7 @@ describe 'Essence.Views.Clock', ->
       stub = sinon.stub Essence.AudioPlayer, 'play'
       @view.alert()
       expect(stub).toHaveBeenCalled()
+      stub.restore()
 
   describe '#renderTimer', ->
     it 'renders the timer', ->
