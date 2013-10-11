@@ -7,6 +7,7 @@ class Essence.Models.Timelet extends Essence.Model
     name: ''
     duration: 0
     loop: false
+    alert: false
 
   validate: (attrs, options) ->
     unless parseInt(attrs.duration)
@@ -39,12 +40,23 @@ class Essence.Models.Timelet extends Essence.Model
   #
   isLoaded: -> @state.loaded
 
+  # Checks if the timelet should alert.
+  #
+  # Evaluates to `true` when 10% of the duration is left and
+  # the `alert` flag is set.
+  #
+  # @return [Boolean] `true` if the timelet can alert, otherwise `false`
+  #
+  isAlertable: ->
+    @get('alert') and (@state.timer <= @get('duration') / 10.0)
+
   # Decrements the timer value by one until it reaches zero.
   #
   tick: =>
     @state.timer--
 
     @trigger 'tick'
+    @trigger 'alert' if @isAlertable()
 
     if @isFinished()
       if @get('loop') then @restart() else @stop()

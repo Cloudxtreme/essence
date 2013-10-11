@@ -29,14 +29,16 @@ module Support
     # @param [String] name the name of the timelet
     # @param [Integer] duration the duration of the timlet
     # @param [Boolean] loop whether the timelet should loop
+    # @param [Boolean] loop whether the timelet alerts
     #
-    def create_timelet(name, duration, loop = false)
+    def create_timelet(name, duration, loop = false, alert = false)
       within 'section.timelets' do 
         find('.add').click
         page.should have_content 'Duration:'
         find_field('name', with: 'New Timelet').set name
         find_field('duration', with: '0').set duration.to_s
         check('loop') if loop
+        check('alert') if alert
         find('.details label').click
         find('.save').click
       end

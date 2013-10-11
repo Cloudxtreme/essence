@@ -10,6 +10,7 @@ class Essence.Views.Clock extends Backbone.Marionette.ItemView
     @listenTo @model, 'tick',  @renderTimer
     @listenTo @model, 'start', @applyRunningState
     @listenTo @model, 'stop',  @applyRunningState
+    @listenTo @model, 'alert', @alert
 
   ui:
     timer:      '.timer'
@@ -17,6 +18,7 @@ class Essence.Views.Clock extends Backbone.Marionette.ItemView
     clockSave:  '.save'
     clockTimer: '.time'
     clockStart: '.play'
+    alert:      'audio#blip'
 
   events:
     'click .play':  'pauseTimelet'
@@ -39,6 +41,11 @@ class Essence.Views.Clock extends Backbone.Marionette.ItemView
   restartTimelet: ->
     @model.restart()
     @renderTimer()
+
+  # Plays an alert sound.
+  #
+  alert: ->
+    new Audio('/assets/beep.ogg').play()
 
   # Render the current timer value.
   #

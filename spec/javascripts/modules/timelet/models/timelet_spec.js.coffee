@@ -81,6 +81,29 @@ describe 'Essence.Models.Timelet', ->
       it 'returns true', ->
         expect(@model.isLoaded()).toBeFalsy()
 
+  describe '#isAlertable', ->
+    describe 'without the alert flag set', ->
+      it 'returns false', ->
+        expect(@model.isAlertable()).toBeFalsy()
+
+    describe 'with the alert flag set', ->
+      beforeEach ->
+        @model.set alert: true
+        @model.set duration: 20
+        @model.state.timer = 3
+
+      it 'returns false', ->
+        expect(@model.isAlertable()).toBeFalsy()
+
+    describe 'with the alert flag set and a timer that reached 10% of the duration', ->
+      beforeEach ->
+        @model.set alert: true
+        @model.set duration: 20
+        @model.state.timer = 2
+
+      it 'returns true', ->
+        expect(@model.isAlertable()).toBeTruthy()
+
   describe '#tick', ->
     it 'decrements the timer', ->
       @model.state.timer = 42
@@ -110,6 +133,21 @@ describe 'Essence.Models.Timelet', ->
           spy = sinon.spy @model, 'restart'
           @model.tick()
           expect(spy).toHaveBeenCalled()
+
+    describe 'when the alert flag is set and the timelet can be alerted', ->
+      beforeEach ->
+        @model.set alert: true
+        @isAlertable = sinon.stub @model, 'isAlertable'
+        @isAlertable.returns true
+
+      afterEach ->
+        @isAlertable.restore()
+
+      it 'triggers an alert', ->
+        spy = sinon.spy @model, 'trigger'
+        @model.tick()
+        expect(spy).toHaveBeenCalledWith 'alert'
+        spy.restore()
 
   describe '#load', ->
     beforeEach ->

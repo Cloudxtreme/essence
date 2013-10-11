@@ -15,6 +15,13 @@
         - else
           %input{ type: 'checkbox', name: 'loop', value: @loop }
         loop
+    .alert
+      %label
+        - if @alert
+          %input{ type: 'checkbox', name: 'alert', value: @alert, checked: 'checked' }
+        - else
+          %input{ type: 'checkbox', name: 'alert', value: @alert }
+        alert
     .button.icon.close{ title: 'Close' }
     .button.icon.delete{ title: 'Delete this timelet' }
     .button.icon.hidden.save{ title: 'Save' }

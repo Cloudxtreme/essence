@@ -85,6 +85,12 @@ describe 'Essence.Views.Clock', ->
       @view.restartTimelet()
       expect(@view.ui.clockTimer).toContainText '42'
 
+  describe '#alert', ->
+    it 'plays a sound file', ->
+      stub = sinon.stub Audio.prototype, 'play'
+      @view.alert()
+      expect(stub).toHaveBeenCalled()
+
   describe '#renderTimer', ->
     it 'renders the timer', ->
       @view.renderTimer()
