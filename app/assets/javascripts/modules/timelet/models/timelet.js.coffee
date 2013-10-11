@@ -6,6 +6,7 @@ class Essence.Models.Timelet extends Essence.Model
   defaults:
     name: ''
     duration: 0
+    loop: false
 
   validate: (attrs, options) ->
     unless parseInt(attrs.duration)
@@ -42,8 +43,11 @@ class Essence.Models.Timelet extends Essence.Model
   #
   tick: =>
     @state.timer--
-    @stop() if @isFinished()
+
     @trigger 'tick'
+
+    if @isFinished()
+      if @get('loop') then @restart() else @stop()
 
   # Loads a timer.
   #

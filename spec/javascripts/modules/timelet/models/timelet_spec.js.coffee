@@ -102,6 +102,15 @@ describe 'Essence.Models.Timelet', ->
         @model.tick()
         expect(spy).toHaveBeenCalled()
 
+      describe 'with loop option', ->
+        beforeEach ->
+          @model.set loop: true
+
+        it 'restarts the timelet', ->
+          spy = sinon.spy @model, 'restart'
+          @model.tick()
+          expect(spy).toHaveBeenCalled()
+
   describe '#load', ->
     beforeEach ->
       @model.set duration: 79
