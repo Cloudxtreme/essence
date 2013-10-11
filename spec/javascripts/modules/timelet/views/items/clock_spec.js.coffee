@@ -27,25 +27,39 @@ describe 'Essence.Views.Clock', ->
 
   describe '#initialize', ->
     it 'renders on model sync', ->
-      @model.set name: 'Foobar timer'
-      expect(@view.ui.clockTitle).toContainText 'Awesome timer'
+      stub = sinon.stub @view, 'render'
+      @view.initialize()
       @model.trigger 'sync'
-      expect(@view.ui.clockTitle).toContainText 'Foobar timer'
+      expect(stub).toHaveBeenCalled()
+      stub.restore()
 
     it 'renders the clock when it ticks', ->
-      expect(@view.ui.clockTimer).toContainText '42'
-      @model.state.timer = 8
+      stub = sinon.stub @view, 'renderTimer'
+      @view.initialize()
       @model.trigger 'tick'
-      expect(@view.ui.clockTimer).toContainText '8'
+      expect(stub).toHaveBeenCalled()
+      stub.restore()
 
-    it 'renders the button when the clock stops or starts', ->
-      expect(@view.$el).not.toHaveClass 'running'
-      @model.state.running = true
+    it 'renders the button when the timelet starts', ->
+      stub = sinon.stub @view, 'applyRunningState'
+      @view.initialize()
       @model.trigger 'start'
-      expect(@view.$el).toHaveClass 'running'
-      @model.state.running = false
+      expect(stub).toHaveBeenCalled()
+      stub.restore()
+
+    it 'renders the button when the timelet stops', ->
+      stub = sinon.stub @view, 'applyRunningState'
+      @view.initialize()
       @model.trigger 'stop'
-      expect(@view.$el).not.toHaveClass 'running'
+      expect(stub).toHaveBeenCalled()
+      stub.restore()
+
+    it 'plays an alert when the timelet alerts', ->
+      stub = sinon.stub @view, 'alert'
+      @view.initialize()
+      @model.trigger 'alert'
+      expect(stub).toHaveBeenCalled()
+      stub.restore()
 
   describe '#render', ->
     it 'shows the clock', ->

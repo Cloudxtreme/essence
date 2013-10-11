@@ -22,27 +22,32 @@ describe 'Essence.Views.Timelet', ->
 
   describe '#initialize', ->
     it 'renders the state when the timelets is loaded', ->
-      expect(@view.$el).not.toHaveClass 'loaded'
-      @model.state.loaded = true
+      stub = sinon.stub @view, 'applyLoadedState'
+      @view.initialize()
       @model.trigger 'loaded'
-      expect(@view.$el).toHaveClass 'loaded'
+      expect(stub).toHaveBeenCalled()
+      stub.restore()
 
     it 'renders the state when the timelets is unloaded', ->
-      @view.$el.addClass 'loaded'
-      @model.state.loaded = false
+      stub = sinon.stub @view, 'applyLoadedState'
+      @view.initialize()
       @model.trigger 'unloaded'
-      expect(@view.$el).not.toHaveClass 'loaded'
+      expect(stub).toHaveBeenCalled()
+      stub.restore()
 
     it 'marks invalid fields on validation error', ->
-      expect(@view.$el.find('input[name=duration]')).not.toHaveClass 'validation-error'
-      @model.trigger 'invalid', @model, duration: 'too short'
-      expect(@view.$el.find('input[name=duration]')).toHaveClass 'validation-error'
+      stub = sinon.stub @view, 'markValidationErrors'
+      @view.initialize()
+      @model.trigger 'invalid'
+      expect(stub).toHaveBeenCalled()
+      stub.restore()
 
     it 'collapses the Timelet when the collection is collapsed', ->
-      @view.expanded = true
-      expect(@view.expanded).toBeTruthy()
+      stub = sinon.stub @view, 'collapse'
+      @view.initialize()
       @model.collection.trigger 'collapse'
-      expect(@view.expanded).toBeFalsy()
+      expect(stub).toHaveBeenCalled()
+      stub.restore()
 
   describe '#render', ->
     it 'renders the model', ->
