@@ -10,5 +10,7 @@ task appcache: :environment do
         file.write "assets/#{ File.basename(asset) }\n"
       end
     end
+    file.write "NETWORK\n"
+    file.write "*\n"
   end
 end
