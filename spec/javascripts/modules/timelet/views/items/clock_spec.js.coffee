@@ -101,7 +101,7 @@ describe 'Essence.Views.Clock', ->
 
   describe '#alert', ->
     it 'plays a sound file', ->
-      stub = sinon.stub Audio.prototype, 'play'
+      stub = sinon.stub Essence.AudioPlayer, 'play'
       @view.alert()
       expect(stub).toHaveBeenCalled()
 
