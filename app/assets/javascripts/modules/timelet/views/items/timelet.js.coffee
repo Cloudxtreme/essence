@@ -11,12 +11,12 @@ class Essence.Views.Timelet extends Backbone.Marionette.ItemView
     fields:  'input'
 
   events:
-    'click .delete':           'delete'
-    'click .load':             'load'
-    'click .save':             'save'
-    'click .close':            'collapse'
-    'click input[name=name]':  'expand'
-    'change input[type=text]': 'updateModel'
+    'click .delete':          'delete'
+    'click .load':            'load'
+    'click .save':            'save'
+    'click .close':           'collapse'
+    'click input[name=name]': 'expand'
+    'change input':           'updateModel'
 
   initialize: ->
     @listenTo @model, 'loaded',   @applyLoadedState
@@ -33,13 +33,9 @@ class Essence.Views.Timelet extends Backbone.Marionette.ItemView
   # @param [jQuery.Event] event the click event
   #
   updateModel: (event) =>
-    el = $(event.currentTarget)
-    attribute = el.attr 'name'
+    @model.setFromInputElement $(event.currentTarget)
 
-    return unless @model.has attribute
-
-    @model.setStrict attribute, el.val()
-    if @model.isValid() and @model.hasChanged(attribute)
+    if @model.isValid() and @model.hasChanged()
       @enableSaveButton()
     else
       @disableSaveButton()

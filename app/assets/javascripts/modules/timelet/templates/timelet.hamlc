@@ -8,6 +8,13 @@
         Duration:
         %input{ type: 'text', size: 4, name: 'duration', value: @duration }
         s
+    .loop
+      %label
+        - if @loop
+          %input{ type: 'checkbox', name: 'loop', value: @loop, checked: 'checked' }
+        - else
+          %input{ type: 'checkbox', name: 'loop', value: @loop }
+        loop
     .button.icon.close{ title: 'Close' }
     .button.icon.delete{ title: 'Delete this timelet' }
     .button.icon.hidden.save{ title: 'Save' }

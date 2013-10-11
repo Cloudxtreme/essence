@@ -63,56 +63,41 @@ describe 'Essence.Views.Timelet', ->
   describe '#updateModel', ->
     beforeEach ->
       @event = new jQuery.Event()
-      @saveSpy = sinon.spy @model, 'setStrict'
+      @setStub = sinon.stub @model, 'setFromInputElement'
 
     afterEach ->
-      @saveSpy.restore()
+      @setStub.restore()
 
-    describe 'with a non-existant attribute', ->
+    it 'sets the attribute', ->
+      @view.updateModel @event
+      expect(@setStub).toHaveBeenCalled()
+
+    describe 'with a valid model and changed values', ->
       beforeEach ->
-        @event.currentTarget = $ '<input name=foobar>'
+        @model.set duration: 5
+
+      it 'enables the save button', ->
+        spy = sinon.spy @view, 'enableSaveButton'
         @view.updateModel @event
+        expect(spy).toHaveBeenCalled()
+        spy.restore()
 
-      it 'does nothing', ->
-        expect(@saveSpy).not.toHaveBeenCalled()
+    describe 'without changed values', ->
+      it 'disables the save button', ->
+        spy = sinon.spy @view, 'disableSaveButton'
+        @view.updateModel @event
+        expect(spy).toHaveBeenCalled()
+        spy.restore()
 
-    describe 'with an existant attribute', ->
+    describe 'with an invalid model', ->
       beforeEach ->
-        @event.currentTarget = $ '<input name=name value="New name">'
+        @model.set duration: 'abc'
 
-      it 'sets the attribute on the model', ->
+      it 'disables the save button', ->
+        spy = sinon.spy @view, 'disableSaveButton'
         @view.updateModel @event
-        expect(@saveSpy).toHaveBeenCalledWith 'name', 'New name'
-
-      describe 'and a valid model with changed values', ->
-        beforeEach ->
-          @event.currentTarget = $ '<input name=name value="New name">'
-
-        it 'enables the save button', ->
-          spy = sinon.spy @view, 'enableSaveButton'
-          @view.updateModel @event
-          expect(spy).toHaveBeenCalled()
-          spy.restore()
-
-      describe 'and a valid model and no changed values', ->
-        beforeEach ->
-          @event.currentTarget = $ '<input name=name value="My test Timelet">'
-
-        it 'disables the save button', ->
-          spy = sinon.spy @view, 'disableSaveButton'
-          @view.updateModel @event
-          expect(spy).toHaveBeenCalled()
-          spy.restore()
-
-      describe 'and an invalid model and changed values', ->
-        beforeEach ->
-          @event.currentTarget = $ '<input name=duration value="invalid duration">'
-
-        it 'disables the save button', ->
-          spy = sinon.spy @view, 'disableSaveButton'
-          @view.updateModel @event
-          expect(spy).toHaveBeenCalled()
-          spy.restore()
+        expect(spy).toHaveBeenCalled()
+        spy.restore()
 
   describe '#expand', ->
     it 'makes the details visible', ->
