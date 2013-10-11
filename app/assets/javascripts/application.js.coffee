@@ -1,4 +1,3 @@
-#= require i18n
 #= require jquery
 #= require jquery_ujs
 #= require underscore
@@ -7,7 +6,6 @@
 #= require backbone
 #= require backbone.marionette
 #= require backbone/backbone.localstorage.js
-#= require select2
 #
 #= require ./lib/namespaces
 #= require ./lib/backbone/history
