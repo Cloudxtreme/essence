@@ -19,12 +19,12 @@ set :use_sudo, false
 set :keep_releases, 5
 after 'deploy:update', 'deploy:cleanup'
 
-role :web, 'alphagemini.org'                          # Your HTTP server, Apache/etc
-role :app, 'alphagemini.org'                          # This may be the same as your `Web` server
+role :web, 'alphagemini.org'
+role :app, 'alphagemini.org'
 
 # Generate application.manifest
-task :create_appcache, :roles => [:app] do
-  run 'rake appcache'
+task :create_appcache, roles: :app do
+  run "cd #{ deploy_to }/current; /usr/bin/env rake appcache"
 end
 before 'deploy:assets:precompile', :create_appcache
 
