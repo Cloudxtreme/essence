@@ -121,6 +121,8 @@ GEM
     highline (1.6.19)
     hike (1.2.3)
     i18n (0.6.5)
+    i18n-js (2.1.2)
+      i18n
     io-console (0.3)
     jbuilder (1.5.1)
       activesupport (>= 3.0.0)
@@ -281,6 +283,7 @@ DEPENDENCIES
   guard-jasmine
   haml-rails
   haml_coffee_assets
+  i18n-js
   jasminerice!
   jbuilder (~> 1.2)
   jquery-rails
