@@ -24,9 +24,9 @@ role :app, 'alphagemini.org'
 
 # Generate application.manifest
 task :create_appcache, roles: :app do
-  run "cd #{ deploy_to }/current; /usr/bin/env rake appcache"
+  run "cd #{ current_release } && bundle exec rake appcache"
 end
-before 'deploy:assets:precompile', :create_appcache
+after 'deploy', :create_appcache
 
 # If you are using Passenger mod_rails uncomment this:
 namespace :deploy do
