@@ -30,7 +30,7 @@ describe 'Essence.Views.Timelets', ->
       stub = sinon.stub @view.options.parent, 'trigger'
       model = new Essence.Models.Timelet
       @view.collection.add model
-      @view.trigger 'itemview:timelet:load', model: model
+      @view.trigger 'childview:timelet:load', model: model
       expect(stub).toHaveBeenCalledWith 'timelet:load', model.id
       stub.restore()
 

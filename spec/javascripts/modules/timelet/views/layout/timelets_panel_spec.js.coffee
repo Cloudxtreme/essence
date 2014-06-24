@@ -19,7 +19,7 @@ describe 'Essence.Views.TimeletsPanel', ->
 
   describe '#constructor', ->
     it 'creates a layout', ->
-      expect(@view).toBeAnInstanceOf Backbone.Marionette.Layout
+      expect(@view).toBeAnInstanceOf Backbone.Marionette.LayoutView
 
     it 'sets the model and collection', ->
       expect(@view.model).toBe @model
