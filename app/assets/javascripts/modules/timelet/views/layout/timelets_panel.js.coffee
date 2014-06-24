@@ -4,7 +4,7 @@
 #
 # Manages all timlets in a timelet list.
 #
-class Essence.Views.TimeletsPanel extends Backbone.Marionette.Layout
+class Essence.Views.TimeletsPanel extends Backbone.Marionette.LayoutView
 
   template: 'modules/timelet/templates/timelets_panel'
 

@@ -11,15 +11,15 @@ feature 'Creating timelets' do
     create_timelet 'My second timelet', 30
 
     within 'section.timelets' do
-      page.should have_field 'name', with: 'My first timelet'
-      page.should have_field 'name', with: 'My second timelet'
+      expect(page).to have_field 'name', with: 'My first timelet'
+      expect(page).to have_field 'name', with: 'My second timelet'
     end
 
     visit '/timelet'
 
     within 'section.timelets' do
-      page.should have_field 'name', with: 'My first timelet'
-      page.should have_field 'name', with: 'My second timelet'
+      expect(page).to have_field 'name', with: 'My first timelet'
+      expect(page).to have_field 'name', with: 'My second timelet'
     end
   end
 
@@ -28,8 +28,8 @@ feature 'Creating timelets' do
     create_timelet 'My second timelet', 30
 
     within 'section.timelets' do
-      page.should have_field 'name', with: 'My first timelet'
-      page.should have_field 'name', with: 'My second timelet'
+      expect(page).to have_field 'name', with: 'My first timelet'
+      expect(page).to have_field 'name', with: 'My second timelet'
     end
 
     within 'section.timelets' do
@@ -38,8 +38,8 @@ feature 'Creating timelets' do
     first_timelet_path = current_path
 
     within 'section.timelets' do
-      page.should have_field 'name', with: 'My first timelet'
-      page.should have_field 'name', with: 'My second timelet'
+      expect(page).to have_field 'name', with: 'My first timelet'
+      expect(page).to have_field 'name', with: 'My second timelet'
     end
 
     within 'section.timelets' do
@@ -50,23 +50,23 @@ feature 'Creating timelets' do
     visit first_timelet_path
 
     within 'section.clock' do
-      page.should have_content '15'
+      expect(page).to have_content '15'
     end
 
     within 'section.timelets' do
-      page.should have_field 'name', with: 'My first timelet'
-      page.should have_field 'name', with: 'My second timelet'
+      expect(page).to have_field 'name', with: 'My first timelet'
+      expect(page).to have_field 'name', with: 'My second timelet'
     end
 
     visit second_timelet_path
 
     within 'section.clock' do
-      page.should have_content '30'
+      expect(page).to have_content '30'
     end
 
     within 'section.timelets' do
-      page.should have_field 'name', with: 'My first timelet'
-      page.should have_field 'name', with: 'My second timelet'
+      expect(page).to have_field 'name', with: 'My first timelet'
+      expect(page).to have_field 'name', with: 'My second timelet'
     end
   end
 

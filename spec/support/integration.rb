@@ -34,7 +34,7 @@ module Support
     def create_timelet(name, duration, loop = false, alert = false)
       within 'section.timelets' do 
         find('.add').click
-        page.should have_content 'Duration:'
+        expect(page).to have_content 'Duration:'
         find_field('name', with: 'New Timelet').set name
         find_field('duration', with: '0').set duration.to_s
         check('loop') if loop

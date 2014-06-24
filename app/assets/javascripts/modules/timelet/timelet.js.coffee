@@ -13,7 +13,7 @@ class Essence.Timelet
   # Create the  HTML structure and
   # named regions for view management.
   #
-  class @Layout extends Backbone.Marionette.Layout
+  class @Layout extends Backbone.Marionette.LayoutView
     template: 'modules/timelet/templates/layout'
 
     regions:
@@ -29,7 +29,7 @@ class Essence.Timelet
 
     # Remove module CSS context
     #
-    onClose: ->
+    onDestroy: ->
       @$el.removeClass 'timelet'
 
   # Defines the url routes the module will handle.

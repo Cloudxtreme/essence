@@ -14,7 +14,7 @@ class Essence.Views.Timelet extends Backbone.Marionette.ItemView
     'click .delete':          'delete'
     'click .load':            'load'
     'click .save':            'save'
-    'click .close':           'collapse'
+    'click .destroy':         'collapse'
     'click input[name=name]': 'expand'
     'change input':           'updateModel'
 

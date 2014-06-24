@@ -27,7 +27,7 @@ end
 
 group :test, :development do
   gem 'bullet'
-  gem 'debugger'
+  gem 'byebug'
   gem 'guard-jasmine', require: false
   gem 'jasminerice'  , :git => 'https://github.com/bradphelan/jasminerice.git'
   gem 'launchy'
@@ -35,17 +35,16 @@ group :test, :development do
   gem 'pry-coolline' , require: false
   gem 'pry-rails'
   gem 'pry-doc'      , require: false
-  gem 'pry-debugger' , require: false
+  gem 'pry-byebug'   , require: false
   gem 'rspec'        , require: false
   gem 'rspec-rails'  , require: false
   gem 'rake'         , require: false
 end
 
 group :test do
-  gem 'capybara'           , require: false
-  gem 'selenium-webdriver' , require: false
-  gem 'fuubar'             , require: false
-  gem 'shoulda-matchers'   , require: false
+  gem 'capybara'               , require: false
+  gem 'selenium-webdriver'     , require: false
+  gem 'fuubar', '~> 2.0.0.rc1' , require: false
 end
 
 group :production do

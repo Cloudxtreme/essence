@@ -11,14 +11,14 @@ feature 'Creating timelets' do
     create_timelet 'My second timelet', 30
 
     within 'section.timelets' do
-      page.should have_field 'name', with: 'My first timelet'
-      page.should have_field 'name', with: 'My second timelet'
+      expect(page).to have_field 'name', with: 'My first timelet'
+      expect(page).to have_field 'name', with: 'My second timelet'
 
       load_timelet 'My second timelet'
     end
 
     within 'section.clock' do
-      page.should have_content '30'
+      expect(page).to have_content '30'
     end
 
     within 'section.timelets' do
@@ -26,7 +26,7 @@ feature 'Creating timelets' do
     end
 
     within 'section.clock' do
-      page.should have_content '15'
+      expect(page).to have_content '15'
     end
   end
 

@@ -18,13 +18,13 @@ feature 'Playing timelets' do
     scenario 'creating and playing a timelet' do
       advance 7
 
-      get_timer().should be_within(2).of(8)
+      expect(get_timer()).to be_within(2).of(8)
     end
 
     scenario 'letting a timelet end' do
       advance 16
 
-      get_timer().should equal 0
+      expect(get_timer()).to equal 0
     end
 
     scenario 'restarting a timelet' do
@@ -34,7 +34,7 @@ feature 'Playing timelets' do
         find('.button.reset').click
       end
 
-      get_timer().should be_within(2).of(15)
+      expect(get_timer()).to be_within(2).of(15)
     end
 
   end
@@ -55,7 +55,7 @@ feature 'Playing timelets' do
     scenario 'creating and playing the timelet' do
       advance 30
 
-      get_timer().should be_within(2).of(6)
+      expect(get_timer()).to be_within(2).of(6)
     end
 
     scenario 'restarting the timelet' do
@@ -65,7 +65,7 @@ feature 'Playing timelets' do
         find('.button.reset').click
       end
 
-      get_timer().should be_within(2).of(9)
+      expect(get_timer()).to be_within(2).of(9)
     end
 
   end
@@ -82,8 +82,8 @@ feature 'Playing timelets' do
     scenario 'loading a timelet while another one is running' do
 
       within 'section.timelets' do
-        page.should have_field 'name', with: 'My first timelet'
-        page.should have_field 'name', with: 'My second timelet'
+        expect(page).to have_field 'name', with: 'My first timelet'
+        expect(page).to have_field 'name', with: 'My second timelet'
       end
 
       within 'section.timelets' do
@@ -91,24 +91,24 @@ feature 'Playing timelets' do
       end
 
       within 'section.clock' do
-        page.should have_content '30'
+        expect(page).to have_content '30'
       end
 
       find('.button.play').click
 
       advance 20
 
-      get_timer().should be_within(2).of(10)
+      expect(get_timer()).to be_within(2).of(10)
 
       within 'section.timelets' do
         first('.load').click
       end
 
-      get_timer().should equal 15
+      expect(get_timer()).to equal 15
 
       advance 10
 
-      get_timer().should equal 15
+      expect(get_timer()).to equal 15
     end
 
   end
