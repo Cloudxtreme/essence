@@ -20,7 +20,7 @@ Setup
 
 Install [rbenv](https://github.com/sstephenson/rbenv) and the ruby version defined in [.ruby-version](https://github.com/kaethorn/essence/blob/master/.ruby-version).
 
-Then, run install all gems
+Then, install all gems with
 
 ```
 bundle
