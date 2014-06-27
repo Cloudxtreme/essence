@@ -45,7 +45,7 @@ class Essence.Views.Clock extends Backbone.Marionette.ItemView
   # Plays an alert sound.
   #
   alert: ->
-    Essence.AudioPlayer.play '/beep.ogg'
+    Essence.AudioPlayer.play '/audios/beep.ogg'
 
   # Render the current timer value.
   #
