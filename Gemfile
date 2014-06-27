@@ -15,8 +15,10 @@ gem 'uglifier', '>= 1.3.0'
 gem 'unicorn'
 
 group :development do
-  gem 'capistrano'       , require: false
-  gem 'capistrano-rbenv' , require: false
+  gem 'capistrano'        , require: false
+  gem 'capistrano-rbenv'  , require: false
+  gem 'capistrano-rails'  , require: false
+  gem 'capistrano-bundler', require: false
 end
 
 gem 'jbuilder', '~> 1.2'
