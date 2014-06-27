@@ -17,6 +17,11 @@ task appcache: :environment do
       file.write "fonts/#{ File.basename(font) }\n"
     end
 
+    audios = Dir.glob File.join(Rails.root, 'public/audios/**/*')
+    audios.each do |audio|
+      file.write "audios/#{ File.basename(audio) }\n"
+    end
+
     javascripts = Dir.glob File.join(Rails.root, 'public/javascripts/**/*')
     javascripts.each do |javascript|
       file.write "javascripts/#{ File.basename(javascript) }\n"
